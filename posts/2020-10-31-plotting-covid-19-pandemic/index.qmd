@@ -1,0 +1,91 @@
+---
+title: "Plotting Covid-19 Pandemic"
+author: "Ashwin Malshe"
+date: "03-08-2020"
+categories: [covid]
+---
+
+```{r}
+#| label = "setup",
+#| include = FALSE
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In this post, we will visualize spread of worldwide COVID-19 cases through time. I obtained the data from Rami Krispin's website: <https://ramikrispin.github.io/coronavirus/> using `coronovirus` package. I also decided to do some experimentation using John Coene's fantastic [`echarts4r` package](https://echarts4r.john-coene.com/index.html), which allows us to access `echarts` API.
+
+Load the libraries and get the data in the R session.
+
+```{r}
+#| message = FALSE
+library(dplyr)
+library(echarts4r)
+library(coronavirus)
+
+# Get the data
+data("coronavirus")
+```
+
+## Data Preparation
+
+Print out the first 6 observations.
+
+```{r}
+head(coronavirus)
+```
+
+We are interested in `date` and `type`. Let's take a look at the distinct values for `type`.
+
+```{r}
+coronavirus %>% count(type)
+```
+
+There are only 3 values: `confirmed`, `death`, and `recovery`. Next we will create sum of cases for each of the values and store them in separate data sets.
+
+```{r}
+dt1 <- coronavirus %>% 
+  filter(type == "confirmed") %>% 
+  group_by(date) %>% 
+  summarize(Confirmed = sum(cases, na.rm = TRUE), .groups = "drop")
+
+dt2 <- coronavirus %>% 
+  filter(type == "death") %>% 
+  group_by(date) %>% 
+  summarize(Death = sum(cases, na.rm = TRUE), .groups = "drop")
+
+
+dt3 <- coronavirus %>% 
+  filter(type == "recovery") %>% 
+  group_by(date) %>% 
+  summarize(Recovered = sum(cases, na.rm = TRUE), .groups = "drop")
+
+
+```
+
+There is an error in the recovery figures in 14th December 2020. So I plot only cases and deaths.
+
+Finally, we will merge the 2 datasets so that we will have the counts of each `type` in separate columns.
+
+```{r}
+dt <- dt1 %>% 
+  inner_join(dt2, by = "date") 
+```
+
+## Plot
+
+Finally, time to make the plot! Note how we can build this plot in separate elements.
+
+```{r}
+#| fig.width = 6
+dt %>% 
+  e_charts(x = date) %>% 
+  e_line(serie = Confirmed) %>% 
+  e_line(serie = Death) %>% 
+  e_tooltip(trigger = "axis") %>% 
+  e_datazoom(type = "slider") %>% 
+  e_title("Worldwide COVID-19 cases") %>% 
+  e_theme("bee-insipired") 
+```
+
+<br>
+
+This plot is interactive so you can hover over the plot to get the exact readings. You can also toggle time series on or off by clicking on the legends on top.

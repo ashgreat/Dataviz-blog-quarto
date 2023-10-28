@@ -1,0 +1,142 @@
+---
+title: "Visualization of monthly NBER paper submissions"
+description: |
+  This post is a tidytuesday post. See the post below for the data source.
+date: 10-04-2021
+
+---
+
+```{r}
+#| label = "setup",
+#| include = FALSE
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(ggridges)
+
+papers <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-09-28/papers.csv')
+authors <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-09-28/authors.csv')
+programs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-09-28/programs.csv')
+paper_authors <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-09-28/paper_authors.csv')
+paper_programs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-09-28/paper_programs.csv')
+
+theme_set(hrbrthemes::theme_ipsum_gs())
+```
+
+*Get the data sets from here: https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-09-28/readme.md*
+
+:::{.column-margin}
+Get the updates about this visualization and full code from here: https://github.com/ashgreat/tidytuesday/tree/main/2021-10-01-NBER
+:::
+
+Anecdotally I had heard that many economists were submitting tons of papers to NBER during the Covid-19 pandemic. However, it was not clear to me whether this was a trend or a flash in the pan. The following visualization show that the spike in 2020 was primarily in one month.
+
+```{r}
+papers %>% 
+  count(year, month) %>% 
+  mutate(date = as.Date(paste(year, month, "01", sep = "-"))) %>% 
+  ggplot(aes(x = date, y = n)) +
+  geom_line(linewidth = 0.3) +
+  labs(x = "", y = "Number of Submissions")
+  
+```
+
+Which month saw the spike? This table shows that it was in May 2020. Top 6 months with highest submissions are in 2020.
+
+```{r}
+papers %>% 
+  count(year, month, sort = TRUE) %>% 
+  head(10) |> 
+  knitr::kable()
+```
+
+Let's annotate the earlier plot with the spike in may 2020.
+
+```{r}
+papers %>% 
+  count(year, month) %>% 
+  mutate(date = as.Date(paste(year, month, "01", sep = "-"))) %>% 
+  ggplot(aes(x = date, y = n)) +
+  geom_line(linewidth = 0.3) +
+  annotate(geom = "text", x = as.Date("2015-01-01"), y = 200, 
+           label = "May 2020 had \n223 submissions", 
+           color = "#b131a2", fontface = "italic", family = hrbrthemes::font_gs) +
+  labs(x = "", y = "Number of Submissions")
+```
+
+## Sub-areas of Economics submitting in May 2020
+
+Next, let's visualize the top subcategories submitting in May 2020. I expected these to be from Heath Care and Heath Economics. But is that the case?
+
+Create a merged data set with `papers` and `programs`
+
+```{r}
+papers_merged <- papers %>% 
+  left_join(paper_programs, by = "paper") %>% 
+  left_join(programs, by = "program")
+```
+
+Next get the top 10 fields by submissions in May 2020:
+
+```{r}
+top_10_may_2020 <- papers_merged %>% 
+  filter(year == 2020 & month == 5) %>% 
+  count(program_desc, sort = TRUE) %>% 
+  head(10)
+```
+
+Take a look at these fields
+
+```{r}
+top_10_may_2020 |> 
+  knitr::kable()
+```
+
+Now we are ready to create a bar plot.
+
+```{r}
+top_10_may_2020 %>% 
+  ggplot(aes(x = reorder(program_desc, n), y = n )) +
+  geom_col() +
+  coord_flip() +
+  labs(x = "", y = "Number of Submissions")
+  
+```
+
+Let's fill the first 3 bars with a different color. Also, using `str_swap` function from `sringr` package (bundled with `tidyvere` so you don't have to install it separately) wrap the axis labels.
+
+```{r}
+top_10_may_2020 %>% 
+  mutate(top3 = ifelse(n >= 56, 1, 0)) %>% 
+  ggplot(aes(x = reorder(program_desc, n), y = n )) +
+  geom_col(aes(fill = as.factor(top3)), show.legend = FALSE) +
+  coord_flip() +
+  scale_fill_manual(values = c("#f78ae0", "#b131a2")) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 25)) +
+  labs(x = "", y = "Number of Submissions")
+  
+```
+
+How does the distribution of the top 10 most submitted program descriptions look like? First, get the top 10 most popular programs of all times.
+
+```{r}
+top_10 <-  papers_merged %>% 
+  count(program_desc, sort = TRUE) %>%  
+  head(10) 
+```
+
+We can compare individual distributions using `facet_wrap`. But there is a better way to compare these distributions over time using `ggridges` package.
+
+```{r}
+#| message: false
+papers_merged %>% 
+  inner_join(top_10, by = "program_desc") %>% 
+  ggplot(aes(x = year, y = program_desc, fill = program)) +
+  geom_density_ridges(scale = 4, alpha = 0.5, size = 0.3) + 
+  scale_fill_cyclical(values = c("#6638f0", "#5cc9f5")) +
+  scale_y_discrete(labels = function(x) str_wrap(x, width = 25)) +
+  labs(x = "", y = "")
+  
+  
+```
+
+Although almost all the top-10 fields experienced increases in 2020 submissions, International Trade and Finance related submissions were flat. Corporate Finance submissions saw a sharper bump compared to Asset Pricing, which both belong to Finance.
