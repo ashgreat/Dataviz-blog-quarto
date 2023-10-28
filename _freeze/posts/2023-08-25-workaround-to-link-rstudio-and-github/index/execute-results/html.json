@@ -1,0 +1,14 @@
+{
+  "hash": "2d812dae53a3e823c3736b7446b2e23a",
+  "result": {
+    "markdown": "---\ntitle: \"Workaround to Linking RStudio and Github\"\ndescription: |\n  Many students face difficulties in linking RStudio and Github. This post shows a workaround using Github Desktop application.\n\ndate: 2023-08-25\n\n---\n\n\n\n\nFor this to work, you must have installed R and RStudio on your computer. Furthermore, you must have a Github.com account. I assume that you already created a repository on Github.com. All the screenshots in this post are taken on a laptop running Windows 10.\n\n## Step 1\n\nDownload Github Desktop from https://desktop.github.com\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](../../Images/github desktop/Download Github desktop.png){width=712}\n:::\n:::\n\n\n## Step 2\n\nLaunch Github Desktop and login using your Github credentials.\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](../../Images/github desktop/Log in to Github desktop.png){width=439}\n:::\n:::\n\n\n## Step 4\n\nAuthorize Github Desktop from Github.com opened in your browser.\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](../../Images/github desktop/Authorize the application.png){width=714}\n:::\n:::\n\n\n## Step 5\n\nGo back to Github Desktop. You will see the following welcome screen. Select the second option.\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](../../Images/github desktop/Welcome screen on Github desktop.png){width=731}\n:::\n:::\n\n\n## Step 6\n\nSelect the repo to clone. Also set the path where this repo will be cloned on your computer. I suggest creating a folder structure such as \"MSDA/Fall 2023/Data Visualization\" and then point Github Desktop to this directly. This way, the DA6233-2023 folder will get added to this directory.\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](../../Images/github desktop/Select the repo to clone.png){width=730}\n:::\n:::\n\n\nAfter successful repo cloning you should see a similar windows:\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](../../Images/github desktop/After the repo is cloned.png){width=674}\n:::\n:::\n\n\n## Step 7\n\nFinally, open RStudio and create a new project from File \\> New Project. Select the second option labeled \"Existing Directory\". This is because we will use the same directory that we pointed Github Desktop to in Step 6.\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](../../Images/github desktop/Create a new project.png){width=572}\n:::\n:::\n\n\nProvide the full link to the project directory and click \"Create Project.\" That's it!\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](../../Images/github desktop/Navigate to the existing directory.png){width=563}\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

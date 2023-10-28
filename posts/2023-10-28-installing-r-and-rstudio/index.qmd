@@ -1,0 +1,44 @@
+---
+title: "Installing R and RStudio"
+description: |
+  This is an old post about installing R and RStudio. It still works.
+date: 2022-08-08
+---
+
+```{r}
+#| label = "setup",
+#| include = FALSE
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+This a short tutorial for the incoming students of UTSA's MS in Data Analytics program. I am going to assume that the reader has no knowledge of R and RStudio, the Integrated Development Environment (IDE), which we use to code.
+
+::: {style="background-color:rgba(0, 0, 0, 0.0470588); text-align:left; vertical-align: middle; padding: 40px;"}
+If you are a Mac user and you are comfortable with command line tools using Terminal, I suggest taking more systematic route for preparing your MacOS for R installation using Homebrew. Instructions are available <a href="https://github.com/jacobxk/setup_macOS_for_R">here</a>. Otherwise, just follow the instructions below like everyone else!
+:::
+
+<br>
+
+1.  R is available for download for Linux, MacOS, and Windows from this link: https://cloud.r-project.org. The latest version of R is `4.2.1` as of 08 August 2022. This is going to be a large download (about 70 MB) so make sure that you have enough space on the hard drive. Also, note that the final installation will take even more space.
+
+2.  If you are using older versions of Mac OSX (El Capitan, Mavericks, etc.), you will find your installation files in the sub-directories from this page: https://cloud.r-project.org
+
+3.  Once you install R, you can launch it to see whether the installation is fine. On my Mac, once launched, R looks like this:
+
+```{r}
+knitr::include_graphics(here::here("Images","R-console.png"))
+```
+
+4.  Next we download RStudio IDE. RStudio needs R installation to function so please make sure that you have successfully followed Steps 1 through 3 above.
+
+The latest stable version of RStudio as of 08 August 2022 is `2022.07.1+554`. It can be obtained for all the operating systems from this link: https://www.rstudio.com/products/rstudio/download/#download. Again, the file size is large so make sure that you have enough space on the computer.
+
+5.  Once you download RStudio, install the software by opening the `exe` file for Windows and `dmg` file for Mac. The installation will be smooth. Just follow the directions, if any, on the screen.
+
+Once you launch it you will see a window similar to mine:
+
+```{r}
+knitr::include_graphics(here::here("Images","RStudio.png"))
+```
+
+6.  If RStudio locates the R installation, everything is fine. Otherwise, uninstall both R and RStudio and reinstall them in the order outlined above. RStudio looks similar to Matlab in case you have used it before. There is a lot of customization possible for RStudio. You can check that out from Tools/Global Options menu.

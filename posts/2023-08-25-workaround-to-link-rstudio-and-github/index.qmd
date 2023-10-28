@@ -1,0 +1,76 @@
+---
+title: "Workaround to Linking RStudio and Github"
+description: |
+  Many students face difficulties in linking RStudio and Github. This post shows a workaround using Github Desktop application.
+
+date: 2023-08-25
+
+---
+
+```{r}
+#| label = "setup",
+#| include = FALSE
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+For this to work, you must have installed R and RStudio on your computer. Furthermore, you must have a Github.com account. I assume that you already created a repository on Github.com. All the screenshots in this post are taken on a laptop running Windows 10.
+
+## Step 1
+
+Download Github Desktop from https://desktop.github.com
+
+```{r}
+knitr::include_graphics(here::here("Images", "github desktop" ,"Download Github desktop.png"))
+```
+
+## Step 2
+
+Launch Github Desktop and login using your Github credentials.
+
+```{r}
+knitr::include_graphics(here::here("Images", "github desktop" ,"Log in to Github desktop.png"))
+```
+
+## Step 4
+
+Authorize Github Desktop from Github.com opened in your browser.
+
+```{r}
+knitr::include_graphics(here::here("Images", "github desktop" ,"Authorize the application.png"))
+```
+
+## Step 5
+
+Go back to Github Desktop. You will see the following welcome screen. Select the second option.
+
+```{r}
+knitr::include_graphics(here::here("Images", "github desktop" ,"Welcome screen on Github desktop.png"))
+```
+
+## Step 6
+
+Select the repo to clone. Also set the path where this repo will be cloned on your computer. I suggest creating a folder structure such as "MSDA/Fall 2023/Data Visualization" and then point Github Desktop to this directly. This way, the DA6233-2023 folder will get added to this directory.
+
+```{r}
+knitr::include_graphics(here::here("Images", "github desktop" ,"Select the repo to clone.png"))
+```
+
+After successful repo cloning you should see a similar windows:
+
+```{r}
+knitr::include_graphics(here::here("Images", "github desktop" ,"After the repo is cloned.png"))
+```
+
+## Step 7
+
+Finally, open RStudio and create a new project from File \> New Project. Select the second option labeled "Existing Directory". This is because we will use the same directory that we pointed Github Desktop to in Step 6.
+
+```{r}
+knitr::include_graphics(here::here("Images", "github desktop" ,"Create a new project.png"))
+```
+
+Provide the full link to the project directory and click "Create Project." That's it!
+
+```{r}
+knitr::include_graphics(here::here("Images", "github desktop" ,"Navigate to the existing directory.png"))
+```

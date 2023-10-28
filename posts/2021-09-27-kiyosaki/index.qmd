@@ -1,0 +1,143 @@
+---
+title: "Kiyosaki Predicting Stock Market Crash"
+description: |
+  Robert Kiyosaki is a legendary peronal finace guru, who has sold millions of copies of the book Rick Dada, Poor Data. Yet, he is also a terrible predictor of the stock market movements!
+date: 2021-09-27
+---
+
+```{r}
+#| label = "setup",
+#| include = FALSE
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(highcharter)
+library(readxl)
+
+```
+
+```{r}
+#| eval = FALSE
+snp <- readxl::read_excel(here::here("data", "snp500.xlsx"), sheet = "Sheet1")
+tweet_links <- readxl::read_excel(here::here("data", "snp500.xlsx"), sheet = "Sheet3")
+
+# tweet_img <- map_df(tweet_links$tweet_url, 
+#                     function(x) {
+#                       RCurl::getURLContent(x) %>% 
+#                         png::readPNG() %>% dim() %>% 
+#                         set_names(c("height", "width", "clr"))
+# }) 
+# 
+# saveRDS(tweet_img, here::here("data", "tweet_img.rds"))
+tweet_img <- readRDS(here::here("data", "tweet_img.rds"))
+
+dt <- snp %>% left_join(cbind(tweet_links, tweet_img), by = "Date") %>% 
+  mutate(Date = as.Date(Date),
+         Adj_Close2 = ifelse(is.na(tweet_url), NA, Adj_Close),
+         tweet_tooltip = ifelse(is.na(tweet_url), NA, paste0('<img src="', tweet_url, '" width="',
+                                round(width/3,0), '" height="',
+                                round(height/3,0), '">')),
+         tweet_tooltip2 = ifelse(is.na(tweet_url), NA, paste0('<img src="', tweet_url, '" width="',
+                                round(width/3,0), '" height="',
+                                round(height/3,0),
+                                '" style="opacity:0.9;filter:alpha(opacity=40);">')))
+  
+saveRDS(dt, here::here("data", "kiyosaki_crash.rds"))
+```
+
+[Robert Kiyosaki](https://en.wikipedia.org/wiki/Robert_Kiyosaki) is a the bestselling author of many personal finance books, most notably [Rich Dad Poor Dad](https://www.richdad.com). But being good at personal finance doesn't mean that he is good at predicting stock market! Over the last 1.5 years, Kiyosaki has warned at least 19 times about an impending stock market crash. As it happens, many of his predictions were made at the bottom of the market. As such, if you followed his advice to move to cash, you would have lost out on the market run up.
+
+Kiyosaki has a large fan following and enjoys strong loyalty from them. Many in the news media take his warnings seriously without looking at his past history such as [this article from Entrepreneur](https://www.entrepreneur.com/article/388670). About a week ago, the parody #FinTwit account Dr. Parik Patel shared the following image on Twitter that annotated S&P 500 Index with Kiyosaki's tweets about market crash.
+
+<blockquote class="twitter-tweet">
+
+<p lang="en" dir="ltr">
+
+Imagine taking investment advice from Robert Kiyosaki <a href="https://t.co/eXqacIDnPG">pic.twitter.com/eXqacIDnPG</a>
+
+</p>
+
+--- Dr. Parik Patel, BA, CFA, ACCA Esq. 💸 (@ParikPatelCFA) <a href="https://twitter.com/ParikPatelCFA/status/1442113763168108545?ref_src=twsrc%5Etfw">September 26, 2021</a>
+
+</blockquote>
+
+```{=html}
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+```
+Although this visualization is pretty cool, it's difficult to read because it's static and has many objects on the chart. So I took this opportunity to create a interactive visualization using `highcharter`, `highcharts`, and R. In the line graph below, you can hover your mouse on the blue points to see the exact warning Kiyosaki tweeted. Enjoy playing with it!
+
+```{r}
+
+dt <- readRDS(here::here("data", "kiyosaki_crash.rds"))
+dt %>% 
+  hchart("line", hcaes(Date, Adj_Close),
+         enableMouseTracking = F,
+         states = list(inactive = list(opacity = 1))) %>% 
+  hc_add_series(dt, "point", hcaes(Date, Adj_Close2)) %>% 
+  hc_yAxis(title = list(text = "S&P 500 Adjusted Close")) %>% 
+  hc_caption(text = '<em>Made by <b>Ashwin Malshe </b> <a href="www.dataviz.school">www.dataviz.school</a></em>') %>% 
+  hc_title(
+    text = "Kiyosaki Predicting Market Crash 💸", align = "center"
+  ) %>% 
+  hc_tooltip(
+    useHTML = TRUE,
+    formatter = JS(
+      "
+      function(){return(this.point.tweet_tooltip2)}
+      "
+    ),
+    shape = "square",
+    borderWidth = 0,
+    backgroundColor = NULL,
+    borderColor = NULL
+  ) %>%
+#   hc_add_annotation(
+#     shapes = list(
+#       type = "image",
+#       src = "https://bit.ly/3EVDsJD",
+#       width = 200, height = 145,
+#       point = list(
+#         x = NULL, xAxis = as.Date("2020-09-01"),
+#         y = 5000, yAxis = 0
+#       )
+#     )
+# ) %>% 
+  hc_add_theme(hc_theme_538())
+  
+```
+
+## Code for making the plot
+
+To make the above plot, you will need two things:
+
+1.  S&P 500 Index returns
+2.  Screenshots of Kiyosaki's tweets
+
+I downloaded the S&P 500 returns from [Yahoo Finance](https://finance.yahoo.com). For Kiyosaki's tweets, I searched for the terms "crash" and "crashed" on his Twitter timeline and went over the tweets that pertain to stock market crash. He has been using that word a lot for prices in many other assets like Bitcoin and gold. I did not use those tweets.
+
+You can download the data set as an RDS file from my Github repository for this blog as shown below. Next you are ready to make the chart!
+
+```{r}
+#| echo = TRUE,
+#| eval = FALSE
+
+# Read the data set
+dt <- readRDS(url("https://github.com/ashgreat/dataviz-blog/blob/main/data/kiyosaki_crash.rds?raw=true"))
+
+# Make the chart!
+
+dt %>% 
+  hchart("line", hcaes(Date, Adj_Close),
+         enableMouseTracking = FALSE,
+         states = list(inactive = list(opacity = 1))) %>% 
+  hc_add_series(dt, "point", hcaes(Date, Adj_Close2)) %>% 
+  hc_yAxis(title = list(text = "S&P 500 Adjusted Close")) %>% 
+  hc_caption(text = '<em>Made by <b>Ashwin Malshe </b> <a href="www.dataviz.school">www.dataviz.school</a></em>') %>% 
+  hc_title( text = "Kiyosaki Predicting Market Crash") %>% 
+  hc_tooltip( useHTML = TRUE,
+              formatter = JS("function(){return(this.point.tweet_tooltip2)}"),
+              shape = "square",
+              borderWidth = 0,
+              backgroundColor = NULL,
+              borderColor = NULL) %>%
+  hc_add_theme(hc_theme_538())
+```
