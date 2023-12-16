@@ -1,7 +1,7 @@
 ---
 title: "Kiyosaki Predicting Stock Market Crash"
 description: |
-  Robert Kiyosaki is a legendary peronal finace guru, who has sold millions of copies of the book Rick Dada, Poor Data. Yet, he is also a terrible predictor of the stock market movements!
+  Robert Kiyosaki is a legendary peronal finace guru, who has sold millions of copies of the book Rich Dad, Poor Dad. Yet, he is also a terrible predictor of the stock market movements!
 date: 2021-09-27
 ---
 
