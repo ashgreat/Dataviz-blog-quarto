@@ -1,0 +1,177 @@
+---
+title: "Analysis of MKT-3031 Spring 2024 Intro Survey"
+date: "January 20, 2024"
+execute: 
+  echo: false
+---
+
+```{r}
+#| message: false
+#| warning: false
+library(dplyr)
+library(highcharter)
+```
+
+```{r}
+dt = readxl::read_excel(here::here("data", "Intro_survey_clean.xlsx")) |> janitor::clean_names()
+```
+
+Thank you for taking the survey! As of the end of the day on January 19th, 97 students completed the intro survey. I created a few bar graphs to show you how you responded. Looks like there are a few brands emerging as clear winners!
+
+### You need to buy a new backpack for school. You'd most likely end up buying it in store or online?
+
+```{r}
+dt |> 
+  count(q2_2) |> 
+  mutate(n_per = 100 * round(n / sum(n), 2)) |> 
+  hchart("bar", hcaes(x = q2_2, y = n_per)) |> 
+  hc_add_theme(hc_theme_hcrt()) |> 
+  hc_tooltip(pointFormat = "<b>{point.n_per}%</b><br/>") %>%
+  hc_yAxis(labels = list(formatter = JS("function () { return (this.value).toFixed(0) + '%'; }")),
+           title = list(text = "")) |> 
+  hc_xAxis(title = list(text = ""))
+  
+```
+
+
+### You're hungry for some "Mexican" fast food. You would head to Taco Cabana or Taco Bell?
+
+```{r}
+
+dt |> 
+  count(q2_3) |> 
+  mutate(n_per = 100 * round(n / sum(n), 2)) |> 
+  arrange(desc(n_per)) |> 
+  hchart("bar", hcaes(x = q2_3, y = n_per)) |> 
+  hc_add_theme(hc_theme_hcrt()) |> 
+  hc_tooltip(pointFormat = "<b>{point.n_per}%</b><br/>") %>%
+  hc_yAxis(labels = list(formatter = JS("function () { return (this.value).toFixed(0) + '%'; }")),
+           title = list(text = "")) |> 
+  hc_xAxis(title = list(text = ""))
+  
+
+```
+
+### Your next car would be a US brand or a non-US brand?
+
+```{r}
+dt |> 
+  count(q2_4) |> 
+  mutate(n_per = 100 * round(n / sum(n), 2)) |> 
+  arrange(desc(n_per)) |>
+  hchart("bar", hcaes(x = q2_4, y = n_per)) |> 
+  hc_add_theme(hc_theme_hcrt()) |> 
+  hc_tooltip(pointFormat = "<b>{point.n_per}%</b><br/>") %>%
+  hc_yAxis(labels = list(formatter = JS("function () { return (this.value).toFixed(0) + '%'; }")),
+           title = list(text = "")) |> 
+  hc_xAxis(title = list(text = ""))
+```
+
+### Ideally, your TV would get content from streaming or cable TV?
+
+```{r}
+dt |> 
+  count(q2_5) |> 
+  mutate(n_per = 100 * round(n / sum(n), 2)) |> 
+  arrange(desc(n_per)) |>
+  hchart("bar", hcaes(x = q2_5, y = n_per)) |> 
+  hc_add_theme(hc_theme_hcrt()) |> 
+  hc_tooltip(pointFormat = "<b>{point.n_per}%</b><br/>") %>%
+  hc_yAxis(labels = list(formatter = JS("function () { return (this.value).toFixed(0) + '%'; }")),
+           title = list(text = "")) |> 
+  hc_xAxis(title = list(text = ""))
+```
+
+
+### You need to have a chicken sandwich right now. Which place has the best one? Chick-fil-A or Popeye's?
+
+```{r}
+dt |> 
+  count(q2_6) |> 
+  mutate(n_per = 100 * round(n / sum(n), 2)) |> 
+  arrange(desc(n_per)) |>
+  hchart("bar", hcaes(x = q2_6, y = n_per)) |> 
+  hc_add_theme(hc_theme_hcrt()) |> 
+  hc_tooltip(pointFormat = "<b>{point.n_per}%</b><br/>") %>%
+  hc_yAxis(labels = list(formatter = JS("function () { return (this.value).toFixed(0) + '%'; }")),
+           title = list(text = "")) |> 
+  hc_xAxis(title = list(text = ""))
+```
+
+### if you were going grocery shopping for the week, you would most likely be going to H-E-B or Walmart?
+
+```{r}
+dt |> 
+  count(q2_7) |> 
+  mutate(n_per = 100 * round(n / sum(n), 2)) |> 
+  arrange(desc(n_per)) |>
+  hchart("bar", hcaes(x = q2_7, y = n_per)) |> 
+  hc_add_theme(hc_theme_hcrt()) |> 
+  hc_tooltip(pointFormat = "<b>{point.n_per}%</b><br/>") %>%
+  hc_yAxis(labels = list(formatter = JS("function () { return (this.value).toFixed(0) + '%'; }")),
+           title = list(text = "")) |> 
+  hc_xAxis(title = list(text = ""))
+```
+
+### Name one brand to which you're fiercely loyal
+
+```{r}
+dt |> 
+  mutate(q3_1_re = stringr::str_to_sentence(q3_1_re)) |> 
+  count(q3_1_re) |> 
+  mutate(q3_1_adj = ifelse(n > 1, q3_1_re, "Other")) |> 
+  group_by(q3_1_adj) |> 
+  summarize(n = sum(n, na.rm = TRUE), .groups = "drop") |> 
+  mutate(n_per = 100 * round(n / sum(n), 2)) |> 
+  arrange(desc(n_per)) |> 
+  mutate(new_order = ifelse(q3_1_adj == "Other", 12, row_number() - 1)) |> 
+  arrange(new_order) |> 
+  hchart("bar", hcaes(x = q3_1_adj, y = n_per)) |> 
+  hc_add_theme(hc_theme_hcrt()) |> 
+  hc_tooltip(pointFormat = "<b>{point.n_per}%</b><br/>") %>%
+  hc_yAxis(labels = list(formatter = JS("function () { return (this.value).toFixed(0) + '%'; }")),
+           title = list(text = "")) |> 
+  hc_xAxis(title = list(text = "")) |> 
+  hc_caption(text = "'Other' group contains all the brands mentioned only once.")
+```
+
+
+### Why are you taking this class? Pick the response(s) that best describes your reasoning
+
+```{r}
+dt |> 
+  count(q6_3) |> 
+  mutate(n_per = 100 * round(n / sum(n), 2)) |> 
+  arrange(desc(n_per)) |>
+  hchart("bar", hcaes(x = q6_3, y = n_per)) |> 
+  hc_add_theme(hc_theme_hcrt()) |> 
+  hc_tooltip(pointFormat = "<b>{point.n_per}%</b><br/>") %>%
+  hc_yAxis(labels = list(formatter = JS("function () { return (this.value).toFixed(0) + '%'; }")),
+           title = list(text = "")) |> 
+  hc_xAxis(title = list(text = ""))
+```
+
+
+### How much responsibility do you think you have for achieving the grade you want?
+
+```{r}
+dt |> 
+  mutate(q6_4_1_adj = case_when(
+    q6_4_1 < 60 ~ "Less than 60%",
+    q6_4_1 >= 60 & q6_4_1 < 70 ~ "60% - 69%",
+    q6_4_1 >= 70 & q6_4_1 < 80 ~ "70% - 79%",
+    q6_4_1 >= 80 & q6_4_1 < 90 ~ "80% - 89%",
+    q6_4_1 >= 90 & q6_4_1 < 100 ~ "90% - 99%",
+    q6_4_1 == 100 ~ "100%")) |> 
+  count(q6_4_1_adj) |> 
+  mutate(n_per = 100 * round(n / sum(n), 2)) |> 
+  arrange(desc(n_per)) |>
+  mutate(new_order = c(1, 2, 3, 6, 4, 5)) |>
+  arrange(new_order) |> 
+  hchart("bar", hcaes(x = q6_4_1_adj, y = n_per)) |> 
+  hc_add_theme(hc_theme_hcrt()) |> 
+  hc_tooltip(pointFormat = "<b>{point.n_per}%</b><br/>") %>%
+  hc_yAxis(labels = list(formatter = JS("function () { return (this.value).toFixed(0) + '%'; }")),
+           title = list(text = "")) |> 
+  hc_xAxis(title = list(text = ""))
+```
