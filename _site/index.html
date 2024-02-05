@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -50,7 +50,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -59,6 +65,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -74,9 +81,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -97,15 +104,42 @@ ul.task-list li input[type="checkbox"] {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Dataviz Blog</span>
     </a>
@@ -117,24 +151,24 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -147,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page-left">
 
       <div>
       <div class="quarto-title-meta-heading">Author</div>
@@ -166,7 +200,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(12)</span></div><div class="category" data-category="Elections">Elections <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Map">Map <span class="quarto-category-count">(1)</span></div><div class="category" data-category="covid">covid <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(13)</span></div><div class="category" data-category="Elections">Elections <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Map">Map <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Shiny">Shiny <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Utility">Utility <span class="quarto-category-count">(1)</span></div><div class="category" data-category="covid">covid <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -177,27 +211,64 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1705730400000" data-listing-file-modified-sort="1705812674957" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="quarto-post image-right" data-index="0" data-categories="Utility,Shiny" data-listing-date-sort="1707026400000" data-listing-file-modified-sort="1707107244596" data-listing-date-modified-sort="1707026400000" data-listing-reading-time-sort="3" data-listing-word-count-sort="479">
 <div class="thumbnail">
-<p><a href="./posts/2024-01-20-MKT-3013-intro-survey/index.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+<p><a href="./posts/2024-02-04-citation-frequency-table/index.html" class="no-external"></a></p><a href="./posts/2024-02-04-citation-frequency-table/index.html" class="no-external">
+<p><img src="./posts/2024-02-04-citation-frequency-table" class="thumbnail-image"></p>
+</a><p><a href="./posts/2024-02-04-citation-frequency-table/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/2024-01-20-MKT-3013-intro-survey/index.html">
 <h3 class="no-anchor listing-title">
-Analysis of MKT-3031 Spring 2024 Intro Survey
+<a href="./posts/2024-02-04-citation-frequency-table/index.html" class="no-external">Citation Frequency Table</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/2024-02-04-citation-frequency-table/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Utility'); return false;">
+Utility
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Shiny'); return false;">
+Shiny
+</div>
 </div>
 <div class="listing-description">
-Thank you for taking the survey! As of the end of the…
+<a href="./posts/2024-02-04-citation-frequency-table/index.html" class="no-external">This is a serverless app that lets you upload your Word document and outputs a table of citations frequencies. A serverless app runs entirely in your browser so your…</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/2024-02-04-citation-frequency-table/index.html" class="no-external">
+<div class="listing-date">
+Feb 4, 2024
+</div>
+<div class="listing-author">
+Ashwin Malshe, Ashwin Malshe
 </div>
 </a>
 </div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-listing-date-sort="1705730400000" data-listing-file-modified-sort="1705812674957" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="1000">
+<div class="thumbnail">
+<p><a href="./posts/2024-01-20-MKT-3013-intro-survey/index.html" class="no-external"></a></p><a href="./posts/2024-01-20-MKT-3013-intro-survey/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/2024-01-20-MKT-3013-intro-survey/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/2024-01-20-MKT-3013-intro-survey/index.html" class="no-external">Analysis of MKT-3031 Spring 2024 Intro Survey</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/2024-01-20-MKT-3013-intro-survey/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./posts/2024-01-20-MKT-3013-intro-survey/index.html" class="no-external">Thank you for taking the survey! As of the end of the day on January 19th, 97 students completed the intro survey. I created a few bar graphs to show you how you responded.…</a>
+</div>
+</div>
 <div class="metadata">
-<a href="./posts/2024-01-20-MKT-3013-intro-survey/index.html">
+<a href="./posts/2024-01-20-MKT-3013-intro-survey/index.html" class="no-external">
 <div class="listing-date">
 Jan 20, 2024
 </div>
@@ -207,25 +278,25 @@ Ashwin Malshe
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-listing-date-sort="1698296400000" data-listing-file-modified-sort="1698525517000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
+<div class="quarto-post image-right" data-index="2" data-listing-date-sort="1698296400000" data-listing-file-modified-sort="1698525517000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1353">
 <div class="thumbnail">
-<p><a href="./posts/2023-10-26-homework-3-2023/homework-3-2023.html"> <p class="card-img-top"><img src="posts/2023-10-26-homework-3-2023/preview-button.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/2023-10-26-homework-3-2023/homework-3-2023.html" class="no-external"></a></p><a href="./posts/2023-10-26-homework-3-2023/homework-3-2023.html" class="no-external">
+<p class="card-img-top"><img src="posts/2023-10-26-homework-3-2023/preview-button.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/2023-10-26-homework-3-2023/homework-3-2023.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/2023-10-26-homework-3-2023/homework-3-2023.html">
 <h3 class="no-anchor listing-title">
-Homework 3 - 2023
+<a href="./posts/2023-10-26-homework-3-2023/homework-3-2023.html" class="no-external">Homework 3 - 2023</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/2023-10-26-homework-3-2023/homework-3-2023.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-Before you begin, note that, in the header, the output format of this document is <code>html_notebook</code>. When you save…<code></code><code></code>
+<a href="./posts/2023-10-26-homework-3-2023/homework-3-2023.html" class="no-external">Before you begin, note that, in the header, the output format of this document is <code>html_notebook</code>. When you save this file, it automatically creates another file with the same…<code></code><code></code></a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/2023-10-26-homework-3-2023/homework-3-2023.html">
+<a href="./posts/2023-10-26-homework-3-2023/homework-3-2023.html" class="no-external">
 <div class="listing-date">
 Oct 26, 2023
 </div>
@@ -235,25 +306,25 @@ Ashwin Malshe
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-listing-date-sort="1692939600000" data-listing-file-modified-sort="1698525079000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="3" data-listing-date-sort="1692939600000" data-listing-file-modified-sort="1698525079000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="255">
 <div class="thumbnail">
-<p><a href="./posts/2023-08-25-workaround-to-link-rstudio-and-github/index.html"> <p class="card-img-top"><img src="Images/github desktop/Download Github desktop.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/2023-08-25-workaround-to-link-rstudio-and-github/index.html" class="no-external"></a></p><a href="./posts/2023-08-25-workaround-to-link-rstudio-and-github/index.html" class="no-external">
+<p class="card-img-top"><img src="Images/github desktop/Download Github desktop.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/2023-08-25-workaround-to-link-rstudio-and-github/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/2023-08-25-workaround-to-link-rstudio-and-github/index.html">
 <h3 class="no-anchor listing-title">
-Workaround to Linking RStudio and Github
+<a href="./posts/2023-08-25-workaround-to-link-rstudio-and-github/index.html" class="no-external">Workaround to Linking RStudio and Github</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/2023-08-25-workaround-to-link-rstudio-and-github/index.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<p>Many students face difficulties in linking RStudio and Github. This post shows a workaround using Github Desktop application.</p>
+<a href="./posts/2023-08-25-workaround-to-link-rstudio-and-github/index.html" class="no-external">Many students face difficulties in linking RStudio and Github. This post shows a workaround using Github Desktop application. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/2023-08-25-workaround-to-link-rstudio-and-github/index.html">
+<a href="./posts/2023-08-25-workaround-to-link-rstudio-and-github/index.html" class="no-external">
 <div class="listing-date">
 Aug 25, 2023
 </div>
@@ -263,25 +334,25 @@ Ashwin Malshe
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-listing-date-sort="1659934800000" data-listing-file-modified-sort="1698525327000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="4" data-listing-date-sort="1659934800000" data-listing-file-modified-sort="1698525327000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="381">
 <div class="thumbnail">
-<p><a href="./posts/2023-10-28-installing-r-and-rstudio/index.html"> <p class="card-img-top"><img src="Images/R-console.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/2023-10-28-installing-r-and-rstudio/index.html" class="no-external"></a></p><a href="./posts/2023-10-28-installing-r-and-rstudio/index.html" class="no-external">
+<p class="card-img-top"><img src="Images/R-console.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/2023-10-28-installing-r-and-rstudio/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/2023-10-28-installing-r-and-rstudio/index.html">
 <h3 class="no-anchor listing-title">
-Installing R and RStudio
+<a href="./posts/2023-10-28-installing-r-and-rstudio/index.html" class="no-external">Installing R and RStudio</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/2023-10-28-installing-r-and-rstudio/index.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<p>This is an old post about installing R and RStudio. It still works.</p>
+<a href="./posts/2023-10-28-installing-r-and-rstudio/index.html" class="no-external">This is an old post about installing R and RStudio. It still works. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/2023-10-28-installing-r-and-rstudio/index.html">
+<a href="./posts/2023-10-28-installing-r-and-rstudio/index.html" class="no-external">
 <div class="listing-date">
 Aug 8, 2022
 </div>
@@ -291,25 +362,25 @@ Ashwin Malshe
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-listing-date-sort="1633323600000" data-listing-file-modified-sort="1698524911000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
+<div class="quarto-post image-right" data-index="5" data-listing-date-sort="1633323600000" data-listing-file-modified-sort="1698524911000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="637">
 <div class="thumbnail">
-<p><a href="./posts/2021-10-04-visualization-of-monthly-nber-paper-submissions/index.html"> <p class="card-img-top"><img src="posts/2021-10-04-visualization-of-monthly-nber-paper-submissions/index_files/figure-html/unnamed-chunk-2-1.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/2021-10-04-visualization-of-monthly-nber-paper-submissions/index.html" class="no-external"></a></p><a href="./posts/2021-10-04-visualization-of-monthly-nber-paper-submissions/index.html" class="no-external">
+<p class="card-img-top"><img src="posts/2021-10-04-visualization-of-monthly-nber-paper-submissions/index_files/figure-html/unnamed-chunk-2-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/2021-10-04-visualization-of-monthly-nber-paper-submissions/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/2021-10-04-visualization-of-monthly-nber-paper-submissions/index.html">
 <h3 class="no-anchor listing-title">
-Visualization of monthly NBER paper submissions
+<a href="./posts/2021-10-04-visualization-of-monthly-nber-paper-submissions/index.html" class="no-external">Visualization of monthly NBER paper submissions</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/2021-10-04-visualization-of-monthly-nber-paper-submissions/index.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<p>This post is a tidytuesday post. See the post below for the data source.</p>
+<a href="./posts/2021-10-04-visualization-of-monthly-nber-paper-submissions/index.html" class="no-external">This post is a tidytuesday post. See the post below for the data source. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/2021-10-04-visualization-of-monthly-nber-paper-submissions/index.html">
+<a href="./posts/2021-10-04-visualization-of-monthly-nber-paper-submissions/index.html" class="no-external">
 <div class="listing-date">
 Oct 4, 2021
 </div>
@@ -319,25 +390,25 @@ Ashwin Malshe
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-listing-date-sort="1632718800000" data-listing-file-modified-sort="1702758111264" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<div class="quarto-post image-right" data-index="6" data-listing-date-sort="1632718800000" data-listing-file-modified-sort="1702758111264" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1131">
 <div class="thumbnail">
-<p><a href="./posts/2021-09-27-kiyosaki/index.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+<p><a href="./posts/2021-09-27-kiyosaki/index.html" class="no-external"></a></p><a href="./posts/2021-09-27-kiyosaki/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/2021-09-27-kiyosaki/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/2021-09-27-kiyosaki/index.html">
 <h3 class="no-anchor listing-title">
-Kiyosaki Predicting Stock Market Crash
+<a href="./posts/2021-09-27-kiyosaki/index.html" class="no-external">Kiyosaki Predicting Stock Market Crash</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/2021-09-27-kiyosaki/index.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<p>Robert Kiyosaki is a legendary peronal finace guru, who has sold millions of copies of the book Rich Dad, Poor Dad. Yet, he is also a terrible predictor of the stock market movements!</p>
+<a href="./posts/2021-09-27-kiyosaki/index.html" class="no-external">Robert Kiyosaki is a legendary peronal finace guru, who has sold millions of copies of the book Rich Dad, Poor Dad. Yet, he is also a terrible predictor of the stock market movements! </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/2021-09-27-kiyosaki/index.html">
+<a href="./posts/2021-09-27-kiyosaki/index.html" class="no-external">
 <div class="listing-date">
 Sep 27, 2021
 </div>
@@ -347,25 +418,25 @@ Ashwin Malshe
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-listing-date-sort="1607752800000" data-listing-file-modified-sort="1698525538000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
+<div class="quarto-post image-right" data-index="7" data-listing-date-sort="1607752800000" data-listing-file-modified-sort="1698525538000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1247">
 <div class="thumbnail">
-<p><a href="./posts/2020-12-12-ggorce/index.html"> <p class="card-img-top"><img src="posts/2020-12-12-ggorce/index_files/figure-html/unnamed-chunk-3-1.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/2020-12-12-ggorce/index.html" class="no-external"></a></p><a href="./posts/2020-12-12-ggorce/index.html" class="no-external">
+<p class="card-img-top"><img src="posts/2020-12-12-ggorce/index_files/figure-html/unnamed-chunk-3-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/2020-12-12-ggorce/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/2020-12-12-ggorce/index.html">
 <h3 class="no-anchor listing-title">
-Easy pie charts and donut charts with ggforce
+<a href="./posts/2020-12-12-ggorce/index.html" class="no-external">Easy pie charts and donut charts with ggforce</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/2020-12-12-ggorce/index.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<p>I make pie charts and donut charts in ggplot2 using a combination of a bar plot and polar coordinates. This works fine but polar coordinates prevent using any other geoms or annotations that need Cartesian coordinates. For example, annoatation_raster doesn’t work with polar coordinates. ggforce solves this issue.</p>
+<a href="./posts/2020-12-12-ggorce/index.html" class="no-external">I make pie charts and donut charts in ggplot2 using a combination of a bar plot and polar coordinates. This works fine but polar coordinates prevent using any other geoms or annotations that need Cartesian coordinates. For example, annoatation_raster doesn’t work with polar coordinates. ggforce solves this issue. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/2020-12-12-ggorce/index.html">
+<a href="./posts/2020-12-12-ggorce/index.html" class="no-external">
 <div class="listing-date">
 Dec 12, 2020
 </div>
@@ -375,25 +446,25 @@ Ashwin Malshe
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-listing-date-sort="1606888800000" data-listing-file-modified-sort="1698523529000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12">
+<div class="quarto-post image-right" data-index="8" data-listing-date-sort="1606888800000" data-listing-file-modified-sort="1698523529000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2293">
 <div class="thumbnail">
-<p><a href="./posts/2020-12-02-election-donuts-pics/index.html"> <p class="card-img-top"><img src="posts/2020-12-02-election-donuts-pics/index_files/figure-html/unnamed-chunk-8-1.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/2020-12-02-election-donuts-pics/index.html" class="no-external"></a></p><a href="./posts/2020-12-02-election-donuts-pics/index.html" class="no-external">
+<p class="card-img-top"><img src="posts/2020-12-02-election-donuts-pics/index_files/figure-html/unnamed-chunk-8-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/2020-12-02-election-donuts-pics/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/2020-12-02-election-donuts-pics/index.html">
 <h3 class="no-anchor listing-title">
-Donut Chart and Geofacets with Images
+<a href="./posts/2020-12-02-election-donuts-pics/index.html" class="no-external">Donut Chart and Geofacets with Images</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/2020-12-02-election-donuts-pics/index.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<p>In this post, I recreate the donut chart overlaid on geo facets. Based on a friend’s feedback, I now add pictures of winners of each state.</p>
+<a href="./posts/2020-12-02-election-donuts-pics/index.html" class="no-external">In this post, I recreate the donut chart overlaid on geo facets. Based on a friend’s feedback, I now add pictures of winners of each state. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/2020-12-02-election-donuts-pics/index.html">
+<a href="./posts/2020-12-02-election-donuts-pics/index.html" class="no-external">
 <div class="listing-date">
 Dec 2, 2020
 </div>
@@ -403,25 +474,25 @@ Ashwin Malshe
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-listing-date-sort="1606716000000" data-listing-file-modified-sort="1698525717000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
+<div class="quarto-post image-right" data-index="9" data-listing-date-sort="1606716000000" data-listing-file-modified-sort="1698525717000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2123">
 <div class="thumbnail">
-<p><a href="./posts/2020-11-30-mf-performance/index.html"> <p class="card-img-top"><img src="Images/fig-1-carhart.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/2020-11-30-mf-performance/index.html" class="no-external"></a></p><a href="./posts/2020-11-30-mf-performance/index.html" class="no-external">
+<p class="card-img-top"><img src="Images/fig-1-carhart.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/2020-11-30-mf-performance/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/2020-11-30-mf-performance/index.html">
 <h3 class="no-anchor listing-title">
-Persistence in Mutual Fund Performance
+<a href="./posts/2020-11-30-mf-performance/index.html" class="no-external">Persistence in Mutual Fund Performance</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/2020-11-30-mf-performance/index.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<p>In this article, I reproduce Figure 1 from Mark Carhart’s classic 1997 Journal of Finance article titled “On Persistence in Mutual Fund Performance”. The visualizations are created using highcharter and echarts4r packages. It is an interactive bar plot that shows that there is a very low persistence in the mutual fund performance.</p>
+<a href="./posts/2020-11-30-mf-performance/index.html" class="no-external">In this article, I reproduce Figure 1 from Mark Carhart’s classic 1997 Journal of Finance article titled “On Persistence in Mutual Fund Performance”. The visualizations are created using highcharter and echarts4r packages. It is an interactive bar plot that shows that there is a very low persistence in the mutual fund performance. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/2020-11-30-mf-performance/index.html">
+<a href="./posts/2020-11-30-mf-performance/index.html" class="no-external">
 <div class="listing-date">
 Nov 30, 2020
 </div>
@@ -431,25 +502,25 @@ Ashwin Malshe
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-listing-date-sort="1605765600000" data-listing-file-modified-sort="1698521236000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
+<div class="quarto-post image-right" data-index="10" data-listing-date-sort="1605765600000" data-listing-file-modified-sort="1698521236000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2115">
 <div class="thumbnail">
-<p><a href="./posts/2020-11-20--us-election-donut/index.html"> <p class="card-img-top"><img src="posts/2020-11-20--us-election-donut/index_files/figure-html/unnamed-chunk-6-1.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/2020-11-20--us-election-donut/index.html" class="no-external"></a></p><a href="./posts/2020-11-20--us-election-donut/index.html" class="no-external">
+<p class="card-img-top"><img src="posts/2020-11-20--us-election-donut/index_files/figure-html/unnamed-chunk-6-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/2020-11-20--us-election-donut/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/2020-11-20--us-election-donut/index.html">
 <h3 class="no-anchor listing-title">
-Donut Chart and Geofacets
+<a href="./posts/2020-11-20--us-election-donut/index.html" class="no-external">Donut Chart and Geofacets</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/2020-11-20--us-election-donut/index.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<p>How to combine a donut chart with geofacets in R.</p>
+<a href="./posts/2020-11-20--us-election-donut/index.html" class="no-external">How to combine a donut chart with geofacets in R. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/2020-11-20--us-election-donut/index.html">
+<a href="./posts/2020-11-20--us-election-donut/index.html" class="no-external">
 <div class="listing-date">
 Nov 19, 2020
 </div>
@@ -459,19 +530,19 @@ Ashwin Malshe
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="Elections,Map" data-listing-date-sort="1604120400000" data-listing-file-modified-sort="1698520459000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="quarto-post image-right" data-index="11" data-categories="Elections,Map" data-listing-date-sort="1604120400000" data-listing-file-modified-sort="1698520459000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="972">
 <div class="thumbnail">
-<p><a href="./posts/2020-10-31-plotting-election-win-probabilities/index.html"> <p class="card-img-top"><img src="posts/2020-10-31-plotting-election-win-probabilities/index_files/figure-html/unnamed-chunk-5-1.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/2020-10-31-plotting-election-win-probabilities/index.html" class="no-external"></a></p><a href="./posts/2020-10-31-plotting-election-win-probabilities/index.html" class="no-external">
+<p class="card-img-top"><img src="posts/2020-10-31-plotting-election-win-probabilities/index_files/figure-html/unnamed-chunk-5-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/2020-10-31-plotting-election-win-probabilities/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/2020-10-31-plotting-election-win-probabilities/index.html">
 <h3 class="no-anchor listing-title">
-Mapping Election Win Probabilities
+<a href="./posts/2020-10-31-plotting-election-win-probabilities/index.html" class="no-external">Mapping Election Win Probabilities</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/2020-10-31-plotting-election-win-probabilities/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Elections'); return false;">
 Elections
@@ -480,14 +551,12 @@ Elections
 Map
 </div>
 </div>
-<a href="./posts/2020-10-31-plotting-election-win-probabilities/index.html">
 <div class="listing-description">
-<p>I show how to create a election map using ggplot2</p>
+<a href="./posts/2020-10-31-plotting-election-win-probabilities/index.html" class="no-external">I show how to create a election map using ggplot2 </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/2020-10-31-plotting-election-win-probabilities/index.html">
+<a href="./posts/2020-10-31-plotting-election-win-probabilities/index.html" class="no-external">
 <div class="listing-date">
 Oct 31, 2020
 </div>
@@ -497,32 +566,30 @@ Ashwin Malshe
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="covid" data-listing-date-sort="1583647200000" data-listing-file-modified-sort="1698519821000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="12" data-categories="covid" data-listing-date-sort="1583647200000" data-listing-file-modified-sort="1698519821000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="328">
 <div class="thumbnail">
-<p><a href="./posts/2020-10-31-plotting-covid-19-pandemic/index.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+<p><a href="./posts/2020-10-31-plotting-covid-19-pandemic/index.html" class="no-external"></a></p><a href="./posts/2020-10-31-plotting-covid-19-pandemic/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/2020-10-31-plotting-covid-19-pandemic/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/2020-10-31-plotting-covid-19-pandemic/index.html">
 <h3 class="no-anchor listing-title">
-Plotting Covid-19 Pandemic
+<a href="./posts/2020-10-31-plotting-covid-19-pandemic/index.html" class="no-external">Plotting Covid-19 Pandemic</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/2020-10-31-plotting-covid-19-pandemic/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('covid'); return false;">
 covid
 </div>
 </div>
-<a href="./posts/2020-10-31-plotting-covid-19-pandemic/index.html">
 <div class="listing-description">
-In this post, we will visualize spread of worldwide COVID-19 cases through time. I obtained the data from Rami Krispin’s website: https://ramikrispin.github.io/coronavirus/ us…<code></code><code></code><code></code>
+<a href="./posts/2020-10-31-plotting-covid-19-pandemic/index.html" class="no-external">In this post, we will visualize spread of worldwide COVID-19 cases through time. I obtained the data from Rami Krispin’s website: https://ramikrispin.github.io/coronavirus/ u…<code></code><code></code><code></code></a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/2020-10-31-plotting-covid-19-pandemic/index.html">
+<a href="./posts/2020-10-31-plotting-covid-19-pandemic/index.html" class="no-external">
 <div class="listing-date">
 Mar 8, 2020
 </div>
@@ -578,6 +645,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -646,13 +740,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -731,10 +827,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -744,8 +839,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -758,6 +862,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -801,6 +1024,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -826,6 +1050,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -886,6 +1136,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

@@ -1,0 +1,82 @@
+---
+title: "Citation Frequency Table"
+subtitle: ""
+description: ""
+author: "Ashwin Malshe"
+date: "2024-02-04"
+image: ""
+image-alt: ""
+categories: [Utility, Shiny]
+date-modified: "2024-02-04"
+draft: FALSE
+filters:
+  - shinylive
+---
+
+This is a serverless app that lets you upload your Word document and outputs a table of citations frequencies. A serverless app runs entirely in your browser so your uploaded file stays on your computer. It does not leave the computer.
+
+The downside of a serverless app is that there will be some delay to intialize it, so please have patience!
+
+It currently works only for *Journal of Marketing* and *Journal of Marketing Research* citation styles. Crucially, multiple citations should be separated by a semicolon. Please email me [ashwin.malshe at utsa.edu] in case you have any issues. 
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 700
+
+library(shiny)
+library(officer)
+library(stringr)
+library(bslib)
+library(DT)
+
+ui = page_sidebar(
+  theme = bs_theme(bootswatch = "cosmo"),
+  title = "",
+  sidebar = sidebar(
+    fileInput("mydoc", "Upload a Word document (.docx extension)"),
+    actionButton("run", "Get Frequency")
+  ),
+  dataTableOutput("tab1")
+)
+
+server = function(input, output, session) {
+  
+  observeEvent(input$run, {
+    output$tab1 = renderDataTable({
+      
+      pattern_updated <- "\\(([\\w\\s,.&;-]+? \\d{4}(?:;[\\w\\s,.&;-]+? \\d{4})*?)\\)"
+      
+      texts = read_docx(input$mydoc$datapath) |> docx_summary()
+      full_text = paste(texts$text, collapse = " ")
+      citations_updated = str_extract_all(full_text, pattern_updated)[[1]]
+      flat_citations = unlist(str_split(citations_updated, ";"))
+      flat_citations = str_replace_all(flat_citations, "e.g.,", "") |> 
+        trimws()
+      Papers = str_replace_all(flat_citations, "\\(|\\)", "")
+      citation_counts_updated <- table(Papers)
+      sorted_citations_updated <- sort(citation_counts_updated, decreasing = TRUE) 
+      
+      freq_tab = data.frame(sorted_citations_updated)
+      
+      return(freq_tab)
+      
+    },
+    server = FALSE, # outputs entire table. Otherwise visible table.
+    extensions = 'Buttons', 
+    options = list(dom = 'Bfrtip',
+                   buttons = list('copy',
+                                  list(extend='csv', filename = gsub("\\bdocx?\\b","", input$mydoc$name)),
+                                  list(extend='excel', filename = gsub("\\bdocx?\\b","", input$mydoc$name))
+                                  ))
+    )# belongs to renderDataTable
+    
+  }) # belongs to observeEvent
+  
+}
+
+
+
+shiny::shinyApp(ui, server)
+```
+
+
