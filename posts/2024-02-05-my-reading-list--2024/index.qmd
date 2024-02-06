@@ -4,12 +4,17 @@ subtitle: ""
 description: ""
 author: "Ashwin malshe"
 date: "2024-02-05"
-image: "books.jpeg"
 image-alt: ""
 categories: [reading, books]
 date-modified: "2024-02-05"
 draft: FALSE
 ---
+
+```{r}
+#| echo: false
+knitr::include_graphics(here::here("Images/books.jpeg"))
+```
+
 
 This post serves as my public reading list for 2024. I mostly listen to books so this is really an audiobook listening list.
 
