@@ -1,0 +1,48 @@
+---
+title: "My Reading List - 2024"
+subtitle: ""
+description: ""
+author: "Ashwin malshe"
+date: "2024-02-05"
+image: "books.jpeg"
+image-alt: ""
+categories: [reading, books]
+date-modified: "2024-02-05"
+draft: FALSE
+---
+
+This post serves as my public reading list for 2024. I mostly listen to books so this is really an audiobook listening list.
+
+### January 2024
+
+1. **The Fund: Ray Dalio, Bridgewater Associates, and the Unraveling of a Wall Street Legend** by *Rob Copland* [Amazon](https://www.amazon.com/Fund-Bridgewater-Associates-Unraveling-Street/dp/1250276934)
+
+
+
+I really loved this book as it is well-researched and well-narrated. I did not know much about Ray Dalio or Bridgewater before, so I learned a lot.
+
+2. **Hidden Potential** by *Adam Grant* [Amazon](https://www.amazon.com/Hidden-Potential-Science-Achieving-Greater/dp/0593653149)
+
+This is a short but nice book. I generally like feel good books and this is one of them.
+
+3. **Barbarians at the Gate: The Fall of RJR Nabisco** by *Bryan Burrough* and *John Helyar* [Amazon](https://www.amazon.com/Barbarians-Gate-Fall-RJR-Nabisco/dp/0061655554/)
+
+This book is a classic so I don't think you need my recommendation for it. It's a very long book (22 hours of listening!) and yet kept its grip on me all throughout. I always wanted to listen to it and it's been in my Audible wishlist for years.
+
+4. **Thinking in Bets** by *Annie Duke* [Amazon](https://www.amazon.com/Thinking-Bets-Making-Smarter-Decisions/dp/0735216371/)
+
+Although this is a nice little book, I knew most of the research and arguments she brings to the table.
+
+### February 2024
+
+5. **Range: Why Generalists Triumph in a Specialized World** by *David Epstein* [Amazon](https://www.amazon.com/Range-Generalists-Triumph-Specialized-World/dp/0735214506/)
+
+This is my second time listening to this book. This book influenced me enough to start a new research project.
+
+6. **Liar's Poker** by *Michael Lewis* [Amazon](https://www.amazon.com/Liars-Poker-Norton-Paperback-Michael/dp/039333869X)
+
+I am currently listening to this audiobook. This is the first book by Michael Lewis, which made his famous. He is an exceptional storyteller. I might check out his "Going Infinite" although it received lukewarm reviews.
+
+
+... to be continued!
+
