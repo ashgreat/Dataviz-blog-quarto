@@ -1,0 +1,15 @@
+{
+  "hash": "a82b99a81089f95f740918c313fb460a",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"My Reading List - 2024\"\nsubtitle: \"\"\ndescription: \"\"\nauthor: \"Ashwin malshe\"\ndate: \"2024-02-05\"\nimage-alt: \"\"\ncategories: [reading, books]\ndate-modified: \"2024-02-05\"\ndraft: FALSE\n---\n\n::: {.cell}\n::: {.cell-output-display}\n![](../../Images/books.jpeg){width=2995}\n:::\n:::\n\n\n\nThis post serves as my public reading list for 2024. I mostly listen to books so this is really an audiobook listening list.\n\n### January 2024\n\n1. **The Fund: Ray Dalio, Bridgewater Associates, and the Unraveling of a Wall Street Legend** by *Rob Copland* [Amazon](https://www.amazon.com/Fund-Bridgewater-Associates-Unraveling-Street/dp/1250276934)\n\n\n\nI really loved this book as it is well-researched and well-narrated. I did not know much about Ray Dalio or Bridgewater before, so I learned a lot.\n\n2. **Hidden Potential** by *Adam Grant* [Amazon](https://www.amazon.com/Hidden-Potential-Science-Achieving-Greater/dp/0593653149)\n\nThis is a short but nice book. I generally like feel good books and this is one of them.\n\n3. **Barbarians at the Gate: The Fall of RJR Nabisco** by *Bryan Burrough* and *John Helyar* [Amazon](https://www.amazon.com/Barbarians-Gate-Fall-RJR-Nabisco/dp/0061655554/)\n\nThis book is a classic so I don't think you need my recommendation for it. It's a very long book (22 hours of listening!) and yet kept its grip on me all throughout. I always wanted to listen to it and it's been in my Audible wishlist for years.\n\n4. **Thinking in Bets** by *Annie Duke* [Amazon](https://www.amazon.com/Thinking-Bets-Making-Smarter-Decisions/dp/0735216371/)\n\nAlthough this is a nice little book, I knew most of the research and arguments she brings to the table.\n\n### February 2024\n\n5. **Range: Why Generalists Triumph in a Specialized World** by *David Epstein* [Amazon](https://www.amazon.com/Range-Generalists-Triumph-Specialized-World/dp/0735214506/)\n\nThis is my second time listening to this book. This book influenced me enough to start a new research project.\n\n6. **Liar's Poker** by *Michael Lewis* [Amazon](https://www.amazon.com/Liars-Poker-Norton-Paperback-Michael/dp/039333869X)\n\nI am currently listening to this audiobook. This is the first book by Michael Lewis, which made his famous. He is an exceptional storyteller. I might check out his \"Going Infinite\" although it received lukewarm reviews.\n\n\n... to be continued!\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
