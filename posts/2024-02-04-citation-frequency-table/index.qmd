@@ -7,27 +7,47 @@ date: "2024-02-04"
 image: ""
 image-alt: ""
 categories: [Utility, Shiny]
-date-modified: "2024-02-04"
+date-modified: "2024-02-06"
 draft: FALSE
 filters:
   - shinylive
 ---
 
-This is a serverless app that lets you upload your Word document and outputs a table of citations frequencies. A serverless app runs entirely in your browser so your uploaded file stays on your computer. It does not leave the computer.
+This is a serverless app that lets you upload your Word document and outputs a table of citations frequencies, which you can download as csv and Excel formats. A serverless app runs entirely in your browser so your uploaded file stays on your computer. It does not leave the computer. **You can use it even without an Internet connection _once it is fully initialized in the browser_.**
 
-The downside of a serverless app is that there will be some delay to intialize it, so please have patience!
+The downside of a serverless app is that there will be some delay to initialize it, so please be patient!
 
-It currently works only for *Journal of Marketing* and *Journal of Marketing Research* citation styles. Crucially, multiple citations should be separated by a semicolon. Please email me [ashwin.malshe at utsa.edu] in case you have any issues. 
+It currently works only for the *Journal of Marketing* and the *Journal of Marketing Research* citation styles. Crucially, multiple citations should be separated by a semicolon. The app will return only the citations that are in parentheses. For example it will return *(Tuli and Bharadwaj 2009)* but can't return *Tuli and Bharadwaj (2009)* because the regex for such a task is not easy. But, I am working on it. Please email me [ashwin.malshe at utsa.edu] in case you have any issues. 
+
+Once again, be patient the first time you initialize the app!
 
 ```{shinylive-r}
 #| standalone: true
-#| viewerHeight: 700
+#| viewerHeight: 750
 
 library(shiny)
 library(officer)
 library(stringr)
 library(bslib)
 library(DT)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ui = page_sidebar(
   theme = bs_theme(bootswatch = "cosmo"),
@@ -44,29 +64,31 @@ server = function(input, output, session) {
   observeEvent(input$run, {
     output$tab1 = renderDataTable({
       
-      pattern_updated <- "\\(([\\w\\s,.&;-]+? \\d{4}(?:;[\\w\\s,.&;-]+? \\d{4})*?)\\)"
+      pattern_updated = "\\(((?![^\\)]*accessed)[\\w\\s,.&;-]+? \\d{4}(?:;[\\w\\s,.&;-]+? \\d{4})*?)\\)"
       
-      texts = read_docx(input$mydoc$datapath) |> docx_summary()
+      texts = read_docx(isolate(input$mydoc$datapath)) |> docx_summary()
       full_text = paste(texts$text, collapse = " ")
       citations_updated = str_extract_all(full_text, pattern_updated)[[1]]
       flat_citations = unlist(str_split(citations_updated, ";"))
       flat_citations = str_replace_all(flat_citations, "e.g.,", "") |> 
         trimws()
       Papers = str_replace_all(flat_citations, "\\(|\\)", "")
-      citation_counts_updated <- table(Papers)
-      sorted_citations_updated <- sort(citation_counts_updated, decreasing = TRUE) 
+      citation_counts_updated = table(Papers)
+      sorted_citations_updated = sort(citation_counts_updated, decreasing = TRUE) 
       
       freq_tab = data.frame(sorted_citations_updated)
       
       return(freq_tab)
       
     },
-    server = FALSE, # outputs entire table. Otherwise visible table.
+    caption = htmltools::tags$caption(style = 'caption-side: top; color:black;', 
+                                      paste("Filename:", isolate(input$mydoc$name))),
+    server = FALSE, # outputs entire table. Otherwise only the visible table.
     extensions = 'Buttons', 
     options = list(dom = 'Bfrtip',
                    buttons = list('copy',
-                                  list(extend='csv', filename = gsub("\\bdocx?\\b","", input$mydoc$name)),
-                                  list(extend='excel', filename = gsub("\\bdocx?\\b","", input$mydoc$name))
+                                  list(extend='csv', filename = gsub("\\bdocx?\\b","", isolate(input$mydoc$name))),
+                                  list(extend='excel', filename = gsub("\\bdocx?\\b","", isolate(input$mydoc$name)))
                                   ))
     )# belongs to renderDataTable
     

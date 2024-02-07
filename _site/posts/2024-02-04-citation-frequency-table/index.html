@@ -150,7 +150,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">February 4, 2024</p>
+        <p class="date-modified">February 6, 2024</p>
       </div>
     </div>
       
@@ -168,17 +168,36 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>This is a serverless app that lets you upload your Word document and outputs a table of citations frequencies. A serverless app runs entirely in your browser so your uploaded file stays on your computer. It does not leave the computer.</p>
-<p>The downside of a serverless app is that there will be some delay to intialize it, so please have patience!</p>
-<p>It currently works only for <em>Journal of Marketing</em> and <em>Journal of Marketing Research</em> citation styles. Crucially, multiple citations should be separated by a semicolon. Please email me [ashwin.malshe at utsa.edu] in case you have any issues.</p>
+<p>This is a serverless app that lets you upload your Word document and outputs a table of citations frequencies, which you can download as csv and Excel formats. A serverless app runs entirely in your browser so your uploaded file stays on your computer. It does not leave the computer. <strong>You can use it even without an Internet connection <em>once it is fully initialized in the browser</em>.</strong></p>
+<p>The downside of a serverless app is that there will be some delay to initialize it, so please be patient!</p>
+<p>It currently works only for the <em>Journal of Marketing</em> and the <em>Journal of Marketing Research</em> citation styles. Crucially, multiple citations should be separated by a semicolon. The app will return only the citations that are in parentheses. For example it will return <em>(Tuli and Bharadwaj 2009)</em> but can’t return <em>Tuli and Bharadwaj (2009)</em> because the regex for such a task is not easy. But, I am working on it. Please email me [ashwin.malshe at utsa.edu] in case you have any issues.</p>
+<p>Once again, be patient the first time you initialize the app!</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 700
+#| viewerHeight: 750
 
 library(shiny)
 library(officer)
 library(stringr)
 library(bslib)
 library(DT)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ui = page_sidebar(
   theme = bs_theme(bootswatch = "cosmo"),
@@ -195,29 +214,31 @@ server = function(input, output, session) {
   observeEvent(input$run, {
     output$tab1 = renderDataTable({
       
-      pattern_updated &lt;- "\\(([\\w\\s,.&amp;;-]+? \\d{4}(?:;[\\w\\s,.&amp;;-]+? \\d{4})*?)\\)"
+      pattern_updated = "\\(((?![^\\)]*accessed)[\\w\\s,.&amp;;-]+? \\d{4}(?:;[\\w\\s,.&amp;;-]+? \\d{4})*?)\\)"
       
-      texts = read_docx(input$mydoc$datapath) |&gt; docx_summary()
+      texts = read_docx(isolate(input$mydoc$datapath)) |&gt; docx_summary()
       full_text = paste(texts$text, collapse = " ")
       citations_updated = str_extract_all(full_text, pattern_updated)[[1]]
       flat_citations = unlist(str_split(citations_updated, ";"))
       flat_citations = str_replace_all(flat_citations, "e.g.,", "") |&gt; 
         trimws()
       Papers = str_replace_all(flat_citations, "\\(|\\)", "")
-      citation_counts_updated &lt;- table(Papers)
-      sorted_citations_updated &lt;- sort(citation_counts_updated, decreasing = TRUE) 
+      citation_counts_updated = table(Papers)
+      sorted_citations_updated = sort(citation_counts_updated, decreasing = TRUE) 
       
       freq_tab = data.frame(sorted_citations_updated)
       
       return(freq_tab)
       
     },
-    server = FALSE, # outputs entire table. Otherwise visible table.
+    caption = htmltools::tags$caption(style = 'caption-side: top; color:black;', 
+                                      paste("Filename:", isolate(input$mydoc$name))),
+    server = FALSE, # outputs entire table. Otherwise only the visible table.
     extensions = 'Buttons', 
     options = list(dom = 'Bfrtip',
                    buttons = list('copy',
-                                  list(extend='csv', filename = gsub("\\bdocx?\\b","", input$mydoc$name)),
-                                  list(extend='excel', filename = gsub("\\bdocx?\\b","", input$mydoc$name))
+                                  list(extend='csv', filename = gsub("\\bdocx?\\b","", isolate(input$mydoc$name))),
+                                  list(extend='excel', filename = gsub("\\bdocx?\\b","", isolate(input$mydoc$name)))
                                   ))
     )# belongs to renderDataTable
     
