@@ -87,8 +87,8 @@ server = function(input, output, session) {
     extensions = 'Buttons', 
     options = list(dom = 'Bfrtip',
                    buttons = list('copy',
-                                  list(extend='csv', filename = gsub("\\bdocx?\\b","", isolate(input$mydoc$name))),
-                                  list(extend='excel', filename = gsub("\\bdocx?\\b","", isolate(input$mydoc$name)))
+                                  list(extend='csv', filename = gsub("\\.docx?\\b","", isolate(input$mydoc$name))),
+                                  list(extend='excel', filename = gsub("\\.docx?\\b","", isolate(input$mydoc$name)))
                                   ))
     )# belongs to renderDataTable
     
