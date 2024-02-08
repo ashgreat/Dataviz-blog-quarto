@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -49,7 +49,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -58,6 +64,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -113,10 +120,10 @@ ul.task-list li input[type="checkbox"] {
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Dataviz Blog</span>
     </a>
@@ -128,24 +135,24 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -188,12 +195,12 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+
 <p>Thank you for taking the survey! As of the end of the day on January 19th, 97 students completed the intro survey. I created a few bar graphs to show you how you responded. Looks like there are a few brands emerging as clear winners!</p>
 <section id="you-need-to-buy-a-new-backpack-for-school.-youd-most-likely-end-up-buying-it-in-store-or-online" class="level3">
 <h3 class="anchored" data-anchor-id="you-need-to-buy-a-new-backpack-for-school.-youd-most-likely-end-up-buying-it-in-store-or-online">You need to buy a new backpack for school. You’d most likely end up buying it in store or online?</h3>
 <div class="cell">
 <div class="cell-output-display">
-
 <div class="highchart html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-01a381a72fb6054f8e27" style="width:100%;height:464px;"></div>
 <script type="application/json" data-for="htmlwidget-01a381a72fb6054f8e27">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":null},"yAxis":{"title":{"text":""},"type":"linear","labels":{"formatter":"function () { return (this.value).toFixed(0) + '%'; }"}},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":false},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"group":"group","data":[{"q2_2":"Definitely in a store","n":28,"n_per":29,"y":29,"name":"Definitely in a store"},{"q2_2":"Definitely online","n":28,"n_per":29,"y":29,"name":"Definitely online"},{"q2_2":"Either one. Don't care.","n":17,"n_per":18,"y":18,"name":"Either one. Don't care."},{"q2_2":"I guess in a store","n":12,"n_per":12,"y":12,"name":"I guess in a store"},{"q2_2":"I guess online","n":11,"n_per":11,"y":11,"name":"I guess online"},{"q2_2":"Neither","n":1,"n_per":1,"y":1,"name":"Neither"}],"type":"bar"}],"xAxis":{"type":"category","title":{"text":""}},"tooltip":{"pointFormat":"<b>{point.n_per}%<\/b><br/>"}},"theme":{"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"IBM Plex Sans","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px"}},"subtitle":{"align":"left","style":{"fontFamily":"Alegreya Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"Alegreya Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"Roboto","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom","itemStyle":{"fontWeight":"normal","color":"#A2A39C"}},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["IBM+Plex+Sans","Alegreya+Sans+SC","Alegreya+Sans","Roboto"],"debug":false},"evals":["hc_opts.yAxis.labels.formatter"],"jsHooks":[]}</script>
 </div>
@@ -203,7 +210,6 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="youre-hungry-for-some-mexican-fast-food.-you-would-head-to-taco-cabana-or-taco-bell">You’re hungry for some “Mexican” fast food. You would head to Taco Cabana or Taco Bell?</h3>
 <div class="cell">
 <div class="cell-output-display">
-
 <div class="highchart html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-3b57a01bbcbaa91824a6" style="width:100%;height:464px;"></div>
 <script type="application/json" data-for="htmlwidget-3b57a01bbcbaa91824a6">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":null},"yAxis":{"title":{"text":""},"type":"linear","labels":{"formatter":"function () { return (this.value).toFixed(0) + '%'; }"}},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":false},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"group":"group","data":[{"q2_3":"Neither","n":51,"n_per":53,"y":53,"name":"Neither"},{"q2_3":"Definitely Taco Cabana","n":13,"n_per":13,"y":13,"name":"Definitely Taco Cabana"},{"q2_3":"Definitely Taco Bell","n":9,"n_per":9,"y":9,"name":"Definitely Taco Bell"},{"q2_3":"I guess Taco Bell","n":9,"n_per":9,"y":9,"name":"I guess Taco Bell"},{"q2_3":"I guess Taco Cabana","n":8,"n_per":8,"y":8,"name":"I guess Taco Cabana"},{"q2_3":"Por que no los dos?","n":7,"n_per":7.000000000000001,"y":7.000000000000001,"name":"Por que no los dos?"}],"type":"bar"}],"xAxis":{"type":"category","title":{"text":""}},"tooltip":{"pointFormat":"<b>{point.n_per}%<\/b><br/>"}},"theme":{"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"IBM Plex Sans","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px"}},"subtitle":{"align":"left","style":{"fontFamily":"Alegreya Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"Alegreya Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"Roboto","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom","itemStyle":{"fontWeight":"normal","color":"#A2A39C"}},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["IBM+Plex+Sans","Alegreya+Sans+SC","Alegreya+Sans","Roboto"],"debug":false},"evals":["hc_opts.yAxis.labels.formatter"],"jsHooks":[]}</script>
 </div>
@@ -213,7 +219,6 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="your-next-car-would-be-a-us-brand-or-a-non-us-brand">Your next car would be a US brand or a non-US brand?</h3>
 <div class="cell">
 <div class="cell-output-display">
-
 <div class="highchart html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-d1a9fae9147e1d668dc9" style="width:100%;height:464px;"></div>
 <script type="application/json" data-for="htmlwidget-d1a9fae9147e1d668dc9">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":null},"yAxis":{"title":{"text":""},"type":"linear","labels":{"formatter":"function () { return (this.value).toFixed(0) + '%'; }"}},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":false},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"group":"group","data":[{"q2_4":"Definitely a non-US brand like Toyota or Volvo.","n":33,"n_per":34,"y":34,"name":"Definitely a non-US brand like Toyota or Volvo."},{"q2_4":"Either one. Don't care.","n":26,"n_per":27,"y":27,"name":"Either one. Don't care."},{"q2_4":"I guess a non-US brand","n":14,"n_per":14,"y":14,"name":"I guess a non-US brand"},{"q2_4":"Definitely an American brand like Ford or Chevrolet","n":9,"n_per":9,"y":9,"name":"Definitely an American brand like Ford or Chevrolet"},{"q2_4":"I guess an American brand","n":9,"n_per":9,"y":9,"name":"I guess an American brand"},{"q2_4":"Neither","n":6,"n_per":6,"y":6,"name":"Neither"}],"type":"bar"}],"xAxis":{"type":"category","title":{"text":""}},"tooltip":{"pointFormat":"<b>{point.n_per}%<\/b><br/>"}},"theme":{"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"IBM Plex Sans","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px"}},"subtitle":{"align":"left","style":{"fontFamily":"Alegreya Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"Alegreya Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"Roboto","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom","itemStyle":{"fontWeight":"normal","color":"#A2A39C"}},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["IBM+Plex+Sans","Alegreya+Sans+SC","Alegreya+Sans","Roboto"],"debug":false},"evals":["hc_opts.yAxis.labels.formatter"],"jsHooks":[]}</script>
 </div>
@@ -223,7 +228,6 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="ideally-your-tv-would-get-content-from-streaming-or-cable-tv">Ideally, your TV would get content from streaming or cable TV?</h3>
 <div class="cell">
 <div class="cell-output-display">
-
 <div class="highchart html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-f6dcd72578cbe47d5a71" style="width:100%;height:464px;"></div>
 <script type="application/json" data-for="htmlwidget-f6dcd72578cbe47d5a71">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":null},"yAxis":{"title":{"text":""},"type":"linear","labels":{"formatter":"function () { return (this.value).toFixed(0) + '%'; }"}},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":false},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"group":"group","data":[{"q2_5":"Definitely streaming services like Netflix or Hulu","n":77,"n_per":79,"y":79,"name":"Definitely streaming services like Netflix or Hulu"},{"q2_5":"I guess streaming services","n":10,"n_per":10,"y":10,"name":"I guess streaming services"},{"q2_5":"Either one. Don't care.","n":5,"n_per":5,"y":5,"name":"Either one. Don't care."},{"q2_5":"Neither","n":3,"n_per":3,"y":3,"name":"Neither"},{"q2_5":"Definitely live TV from cable channels","n":2,"n_per":2,"y":2,"name":"Definitely live TV from cable channels"}],"type":"bar"}],"xAxis":{"type":"category","title":{"text":""}},"tooltip":{"pointFormat":"<b>{point.n_per}%<\/b><br/>"}},"theme":{"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"IBM Plex Sans","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px"}},"subtitle":{"align":"left","style":{"fontFamily":"Alegreya Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"Alegreya Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"Roboto","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom","itemStyle":{"fontWeight":"normal","color":"#A2A39C"}},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["IBM+Plex+Sans","Alegreya+Sans+SC","Alegreya+Sans","Roboto"],"debug":false},"evals":["hc_opts.yAxis.labels.formatter"],"jsHooks":[]}</script>
 </div>
@@ -233,7 +237,6 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="you-need-to-have-a-chicken-sandwich-right-now.-which-place-has-the-best-one-chick-fil-a-or-popeyes">You need to have a chicken sandwich right now. Which place has the best one? Chick-fil-A or Popeye’s?</h3>
 <div class="cell">
 <div class="cell-output-display">
-
 <div class="highchart html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b4cfb9d783168b118674" style="width:100%;height:464px;"></div>
 <script type="application/json" data-for="htmlwidget-b4cfb9d783168b118674">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":null},"yAxis":{"title":{"text":""},"type":"linear","labels":{"formatter":"function () { return (this.value).toFixed(0) + '%'; }"}},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":false},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"group":"group","data":[{"q2_6":"Definitely Chick-fil-A","n":62,"n_per":64,"y":64,"name":"Definitely Chick-fil-A"},{"q2_6":"Both","n":9,"n_per":9,"y":9,"name":"Both"},{"q2_6":"I guess Chick-fil-A","n":8,"n_per":8,"y":8,"name":"I guess Chick-fil-A"},{"q2_6":"Definitely Popeye's","n":7,"n_per":7.000000000000001,"y":7.000000000000001,"name":"Definitely Popeye's"},{"q2_6":"Neither","n":7,"n_per":7.000000000000001,"y":7.000000000000001,"name":"Neither"},{"q2_6":"I guess Popeye's","n":4,"n_per":4,"y":4,"name":"I guess Popeye's"}],"type":"bar"}],"xAxis":{"type":"category","title":{"text":""}},"tooltip":{"pointFormat":"<b>{point.n_per}%<\/b><br/>"}},"theme":{"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"IBM Plex Sans","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px"}},"subtitle":{"align":"left","style":{"fontFamily":"Alegreya Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"Alegreya Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"Roboto","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom","itemStyle":{"fontWeight":"normal","color":"#A2A39C"}},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["IBM+Plex+Sans","Alegreya+Sans+SC","Alegreya+Sans","Roboto"],"debug":false},"evals":["hc_opts.yAxis.labels.formatter"],"jsHooks":[]}</script>
 </div>
@@ -243,7 +246,6 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="if-you-were-going-grocery-shopping-for-the-week-you-would-most-likely-be-going-to-h-e-b-or-walmart">if you were going grocery shopping for the week, you would most likely be going to H-E-B or Walmart?</h3>
 <div class="cell">
 <div class="cell-output-display">
-
 <div class="highchart html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-f06208f6a21cdd5fa4a7" style="width:100%;height:464px;"></div>
 <script type="application/json" data-for="htmlwidget-f06208f6a21cdd5fa4a7">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":null},"yAxis":{"title":{"text":""},"type":"linear","labels":{"formatter":"function () { return (this.value).toFixed(0) + '%'; }"}},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":false},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"group":"group","data":[{"q2_7":"Definitely HEB","n":75,"n_per":77,"y":77,"name":"Definitely HEB"},{"q2_7":"Both","n":12,"n_per":12,"y":12,"name":"Both"},{"q2_7":"Definitely Walmart","n":5,"n_per":5,"y":5,"name":"Definitely Walmart"},{"q2_7":"I guess HEB","n":3,"n_per":3,"y":3,"name":"I guess HEB"},{"q2_7":"Neither","n":2,"n_per":2,"y":2,"name":"Neither"}],"type":"bar"}],"xAxis":{"type":"category","title":{"text":""}},"tooltip":{"pointFormat":"<b>{point.n_per}%<\/b><br/>"}},"theme":{"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"IBM Plex Sans","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px"}},"subtitle":{"align":"left","style":{"fontFamily":"Alegreya Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"Alegreya Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"Roboto","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom","itemStyle":{"fontWeight":"normal","color":"#A2A39C"}},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["IBM+Plex+Sans","Alegreya+Sans+SC","Alegreya+Sans","Roboto"],"debug":false},"evals":["hc_opts.yAxis.labels.formatter"],"jsHooks":[]}</script>
 </div>
@@ -253,7 +255,6 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="name-one-brand-to-which-youre-fiercely-loyal">Name one brand to which you’re fiercely loyal</h3>
 <div class="cell">
 <div class="cell-output-display">
-
 <div class="highchart html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-686e0f3e4f7f61df58f9" style="width:100%;height:464px;"></div>
 <script type="application/json" data-for="htmlwidget-686e0f3e4f7f61df58f9">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":null},"yAxis":{"title":{"text":""},"type":"linear","labels":{"formatter":"function () { return (this.value).toFixed(0) + '%'; }"}},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":false},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"group":"group","data":[{"q3_1_adj":"Apple","n":22,"n_per":23,"new_order":1,"y":23,"name":"Apple"},{"q3_1_adj":"Nike","n":11,"n_per":11,"new_order":2,"y":11,"name":"Nike"},{"q3_1_adj":"None","n":6,"n_per":6,"new_order":3,"y":6,"name":"None"},{"q3_1_adj":"Carhartt","n":2,"n_per":2,"new_order":4,"y":2,"name":"Carhartt"},{"q3_1_adj":"Cerave","n":2,"n_per":2,"new_order":5,"y":2,"name":"Cerave"},{"q3_1_adj":"Dr.pepper","n":2,"n_per":2,"new_order":6,"y":2,"name":"Dr.pepper"},{"q3_1_adj":"Elf","n":2,"n_per":2,"new_order":7,"y":2,"name":"Elf"},{"q3_1_adj":"H-e-b","n":2,"n_per":2,"new_order":8,"y":2,"name":"H-e-b"},{"q3_1_adj":"Lululemon","n":2,"n_per":2,"new_order":9,"y":2,"name":"Lululemon"},{"q3_1_adj":"Nintendo","n":2,"n_per":2,"new_order":10,"y":2,"name":"Nintendo"},{"q3_1_adj":"Playstation","n":2,"n_per":2,"new_order":11,"y":2,"name":"Playstation"},{"q3_1_adj":"Other","n":42,"n_per":43,"new_order":12,"y":43,"name":"Other"}],"type":"bar"}],"xAxis":{"type":"category","title":{"text":""}},"tooltip":{"pointFormat":"<b>{point.n_per}%<\/b><br/>"},"caption":{"text":"'Other' group contains all the brands mentioned only once."}},"theme":{"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"IBM Plex Sans","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px"}},"subtitle":{"align":"left","style":{"fontFamily":"Alegreya Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"Alegreya Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"Roboto","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom","itemStyle":{"fontWeight":"normal","color":"#A2A39C"}},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["IBM+Plex+Sans","Alegreya+Sans+SC","Alegreya+Sans","Roboto"],"debug":false},"evals":["hc_opts.yAxis.labels.formatter"],"jsHooks":[]}</script>
 </div>
@@ -263,7 +264,6 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="why-are-you-taking-this-class-pick-the-responses-that-best-describes-your-reasoning">Why are you taking this class? Pick the response(s) that best describes your reasoning</h3>
 <div class="cell">
 <div class="cell-output-display">
-
 <div class="highchart html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-291f811f7384db952e9a" style="width:100%;height:464px;"></div>
 <script type="application/json" data-for="htmlwidget-291f811f7384db952e9a">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":null},"yAxis":{"title":{"text":""},"type":"linear","labels":{"formatter":"function () { return (this.value).toFixed(0) + '%'; }"}},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":false},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"group":"group","data":[{"q6_3":"I will settle for nothing less than an A","n":76,"n_per":78,"y":78,"name":"I will settle for nothing less than an A"},{"q6_3":"I need to make a B or I will lose my funding or eligibility for a program I am enrolled in","n":10,"n_per":10,"y":10,"name":"I need to make a B or I will lose my funding or eligibility for a program I am enrolled in"},{"q6_3":"I just need to pass","n":9,"n_per":9,"y":9,"name":"I just need to pass"},{"q6_3":"I need to make a C or I will lose my funding or eligibility for a program I am enrolled in","n":2,"n_per":2,"y":2,"name":"I need to make a C or I will lose my funding or eligibility for a program I am enrolled in"}],"type":"bar"}],"xAxis":{"type":"category","title":{"text":""}},"tooltip":{"pointFormat":"<b>{point.n_per}%<\/b><br/>"}},"theme":{"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"IBM Plex Sans","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px"}},"subtitle":{"align":"left","style":{"fontFamily":"Alegreya Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"Alegreya Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"Roboto","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom","itemStyle":{"fontWeight":"normal","color":"#A2A39C"}},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["IBM+Plex+Sans","Alegreya+Sans+SC","Alegreya+Sans","Roboto"],"debug":false},"evals":["hc_opts.yAxis.labels.formatter"],"jsHooks":[]}</script>
 </div>
@@ -273,7 +273,6 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="how-much-responsibility-do-you-think-you-have-for-achieving-the-grade-you-want">How much responsibility do you think you have for achieving the grade you want?</h3>
 <div class="cell">
 <div class="cell-output-display">
-
 <div class="highchart html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-02446e68250442043a69" style="width:100%;height:464px;"></div>
 <script type="application/json" data-for="htmlwidget-02446e68250442043a69">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":null},"yAxis":{"title":{"text":""},"type":"linear","labels":{"formatter":"function () { return (this.value).toFixed(0) + '%'; }"}},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":false},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"group":"group","data":[{"q6_4_1_adj":"100%","n":54,"n_per":56.00000000000001,"new_order":1,"y":56.00000000000001,"name":"100%"},{"q6_4_1_adj":"90% - 99%","n":21,"n_per":22,"new_order":2,"y":22,"name":"90% - 99%"},{"q6_4_1_adj":"80% - 89%","n":16,"n_per":16,"new_order":3,"y":16,"name":"80% - 89%"},{"q6_4_1_adj":"70% - 79%","n":2,"n_per":2,"new_order":4,"y":2,"name":"70% - 79%"},{"q6_4_1_adj":"60% - 69%","n":1,"n_per":1,"new_order":5,"y":1,"name":"60% - 69%"},{"q6_4_1_adj":"Less than 60%","n":3,"n_per":3,"new_order":6,"y":3,"name":"Less than 60%"}],"type":"bar"}],"xAxis":{"type":"category","title":{"text":""}},"tooltip":{"pointFormat":"<b>{point.n_per}%<\/b><br/>"}},"theme":{"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"IBM Plex Sans","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px"}},"subtitle":{"align":"left","style":{"fontFamily":"Alegreya Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"Alegreya Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"Roboto","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom","itemStyle":{"fontWeight":"normal","color":"#A2A39C"}},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["IBM+Plex+Sans","Alegreya+Sans+SC","Alegreya+Sans","Roboto"],"debug":false},"evals":["hc_opts.yAxis.labels.formatter"],"jsHooks":[]}</script>
 </div>
@@ -324,6 +323,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -392,13 +418,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -477,10 +505,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -490,8 +517,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -504,6 +540,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -547,6 +702,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -572,6 +728,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -632,6 +814,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 
