@@ -19,7 +19,7 @@ The downside of a serverless app is that there will be some delay to initialize 
 
 It currently works only for the *Journal of Marketing* and the *Journal of Marketing Research* citation styles. Crucially, multiple citations should be separated by a semicolon. The app will return only the citations that are in parentheses. For example it will return *(Tuli and Bharadwaj 2009)* but can't return *Tuli and Bharadwaj (2009)* because the regex for such a task is not easy. But, I am working on it. Please email me [ashwin.malshe at utsa.edu] in case you have any issues. 
 
-Once again, be patient the first time you initialize the app!
+Thank you for your patience while the app is loading.
 
 ```{shinylive-r}
 #| standalone: true
@@ -29,6 +29,7 @@ library(shiny)
 library(officer)
 library(stringr)
 library(bslib)
+library(shinycssloaders)
 library(DT)
 
 
@@ -56,10 +57,12 @@ ui = page_sidebar(
     fileInput("mydoc", "Upload a Word document (.docx extension)"),
     actionButton("run", "Get Frequency")
   ),
-  dataTableOutput("tab1")
+  shinycssloaders::withSpinner(dataTableOutput("tab1"), type = 5)
 )
 
 server = function(input, output, session) {
+  
+  output$tab1 = renderDataTable(NULL)
   
   observeEvent(input$run, {
     output$tab1 = renderDataTable({
