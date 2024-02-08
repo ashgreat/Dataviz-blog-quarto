@@ -171,7 +171,7 @@ ul.task-list li input[type="checkbox"] {
 <p>This is a serverless app that lets you upload your Word document and outputs a table of citations frequencies, which you can download as csv and Excel formats. A serverless app runs entirely in your browser so your uploaded file stays on your computer. It does not leave the computer. <strong>You can use it even without an Internet connection <em>once it is fully initialized in the browser</em>.</strong></p>
 <p>The downside of a serverless app is that there will be some delay to initialize it, so please be patient!</p>
 <p>It currently works only for the <em>Journal of Marketing</em> and the <em>Journal of Marketing Research</em> citation styles. Crucially, multiple citations should be separated by a semicolon. The app will return only the citations that are in parentheses. For example it will return <em>(Tuli and Bharadwaj 2009)</em> but can’t return <em>Tuli and Bharadwaj (2009)</em> because the regex for such a task is not easy. But, I am working on it. Please email me [ashwin.malshe at utsa.edu] in case you have any issues.</p>
-<p>Once again, be patient the first time you initialize the app!</p>
+<p>Thank you for your patience while the app is loading.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 750
 
@@ -179,6 +179,7 @@ library(shiny)
 library(officer)
 library(stringr)
 library(bslib)
+library(shinycssloaders)
 library(DT)
 
 
@@ -206,10 +207,12 @@ ui = page_sidebar(
     fileInput("mydoc", "Upload a Word document (.docx extension)"),
     actionButton("run", "Get Frequency")
   ),
-  dataTableOutput("tab1")
+  shinycssloaders::withSpinner(dataTableOutput("tab1"), type = 5)
 )
 
 server = function(input, output, session) {
+  
+  output$tab1 = renderDataTable(NULL)
   
   observeEvent(input$run, {
     output$tab1 = renderDataTable({
