@@ -6,7 +6,7 @@ author: "Ashwin malshe"
 date: "2024-02-05"
 image-alt: ""
 categories: [reading, books]
-date-modified: "2024-02-05"
+date-modified: "2024-02-29"
 draft: FALSE
 ---
 
@@ -46,7 +46,23 @@ This is my second time listening to this book. This book influenced me enough to
 
 6. **Liar's Poker** by *Michael Lewis* [Amazon](https://www.amazon.com/Liars-Poker-Norton-Paperback-Michael/dp/039333869X)
 
-I am currently listening to this audiobook. This is the first book by Michael Lewis, which made his famous. He is an exceptional storyteller. I might check out his "Going Infinite" although it received lukewarm reviews.
+This is the first book by Michael Lewis, which made his famous. He is an exceptional storyteller. This book chronicles Lewis's stint at the Solomon Brothers, which went downhill relatively quickly because of mismanagement at the top and missed opportunities. Although I have read several books about Wall Street firms, it still amazes me how brazen these folks are. I guess when Uncle Sam is acting as a backstop for your losses, everyone can be a risk taker! 
+
+7. **Tell Tale** by *Jeffery Archer* [Amazon](https://www.amazon.com/Tell-Tale-Jeffrey-Archer-author/dp/1447252314)
+
+I love Jeffery Archer's short stories, and this book doesn't disappoint although a couple of stories have expected endings if you know his style. This was my second time listening to it, so there were no real surprises. Yet, the story "A Road to Damascus" made me emotional.
+
+8. **The Body** by *Bill Bryson* [Amazon](https://www.amazon.com/Body-Guide-Occupants-Bill-Bryson/dp/0804172722)
+
+Our bodies are extremely complex and full of mysteries. I, for one, barely studied human anatomy having given up biology for computer science in the 11th grade. Therefore, this book brought tremendous insights. I will probably listen to it once more in a few months as it is difficult to retain so much new information in a totally unrelated field.
+
+9. **How I Built This** by *Guy Raz* [Amazon](https://www.amazon.com/How-Built-This-Unexpected-Entrepreneurs/dp/0358645581)
+
+There are hundreds if not thousands of books written on entrepreneurship so adding one more to that list may not be a great achievement. Yet, Guy Raz brings so many new insights to the world of new ventures. What I found super interesting was the practical takeaways that deviate sharply from the advice many experts throw around while romanticizing entrepreneurship. For example, people commonly assume that entrepreneurs are supposed to give up everything and just focus on their start ups. However, this books argues that steady income from a second job may free up an entrepreneur rather than hindering their progress. It gives several examples of successful companies including Airbnb.
+
+10. **The Psychology of Money** by *Morgan Housel* [Amazon](https://www.amazon.com/Psychology-Money-Timeless-lessons-happiness/dp/0857197681)
+
+This is a very popular book about personal finance. I was not aware of the central thesis of the book before buying it on Audible. Although I enjoyed the book, I know most of the research Morgan Housel cites in this book. Therefore, it did not bring new insights to me. However, it is an excellent book if your knowledge about personal finance is limited and you want to start off with an easy read on this topic. As the name suggests, it doesn't get technical about finance.
 
 
 ... to be continued!
