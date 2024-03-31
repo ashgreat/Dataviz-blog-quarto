@@ -6,7 +6,7 @@ author: "Ashwin malshe"
 date: "2024-02-05"
 image-alt: ""
 categories: [reading, books]
-date-modified: "2024-02-29"
+date-modified: "2024-03-31"
 draft: FALSE
 ---
 
@@ -24,32 +24,33 @@ This post serves as my public reading list for 2024. I mostly listen to books so
 
 17. **Surely You're Joking, Mr. Feynman!** by *Richard P. Feynman* [Amazon](https://www.amazon.com/Surely-Youre-Joking-Mr-Feynman/dp/0393355624/)
 
-I think I first read this book when I was in college based on my cousin's recommendation. Over the years, I reread it several times and understood different aspects of Feynman's personality and the arguments he presented in the book. This time, I pondered on the ending of the book where he highlights the problems in the experimental methods in psychology. These problems exist even today! For example, in 1985 he highlighted the reluctance of psychologists to replicate past findings, which even in 2024 stays the same.  
+I think I first read this book in college based on my cousin's recommendation. Over the years, I reread it several times and understood different aspects of Feynman's personality and the arguments he presented in the book. This time, I pondered on the book's ending, where he highlights the problems in the experimental methods in psychology. These problems exist even today! For example, in 1985, he highlighted the reluctance of psychologists to replicate past findings, which, even in 2024, stays the same.  
 
 16. **Wool** by *Hugh Howey* [Amazon](https://www.amazon.com/Wool-Hugh-Howey/dp/0358447844/)
 
-If you watched the first season of Silo on Apple TV Plus and now can't wait for the second season to drop, read this book! Silo has been quite faithful with the original book, *Wool*. I don't want to give any spoilers so I won't discuss anything specific. However, the book is intriguing and I plan to read/listen the next book in the series soon.
+If you watched the first season of Silo on Apple TV Plus and now can't wait for the second season to drop, read this book! Silo has been quite faithful to the original book, *Wool*. I don't want to give any spoilers, so that I won't discuss anything specific. However, the book is intriguing, and I plan to read/listen to the next book in the series soon.
 
 15. **Tyranny of the Minority** by *Steven Levitsky and Daniel Ziblatt* [Amazon](https://www.amazon.com/Tyranny-Minority-American-Democracy-Breaking/dp/0593443071/)
 
-Seth MacFarlane recommended this book to his Instagram followers. The book is mostly about the minority rule in the US politics. It is a well researched book and compares US with several democracies around the globe. The book ends on an optimistic note, which I used to find jarring as a pessimistic person. However, a couple of years ago I realized that I tend to have a defeatist outlook and consequently I am more often wrong about the pace of change. The book also pointed out that radical social changes in the US did not happen quickly but took decades of work by many people. As such, maybe in my lifetime I will get to see a US president elected based on majority votes rather than electoral votes.
+Seth MacFarlane recommended this book to his Instagram followers. The book is mainly about the minority rule in the US politics. It is a well-researched book and compares the US with several democracies around the globe. The book ends on an optimistic note, which I used to find jarring as a pessimistic person. However, a couple of years ago, I realized that I tend to have a defeatist outlook, and consequently, I am more often wrong about the pace of change. The book also pointed out that radical social changes in the US did not happen quickly but took decades of work by many people. As such, maybe in my lifetime, I will see a US president elected based on majority rather than electoral votes.
 
 14. **The Power of Saying No** by *Vanessa Patrick* [Amazon](https://www.amazon.com/Power-Saying-No-Science-Charge/dp/1728251524/)
 
-This book was my gift to the UTSA marketing PhD students last year. I had bought an extra copy for me to read but my father, who was visiting us from India, took it with him to read on the flight. Luckily I found the audiobook in the city library. I really enjoyed Vanessa's writing style which mixes personal anecdotes and her research findings very well. I learned a few things which I am putting in practice now.
+This book was my gift to the UTSA marketing Ph.D. students last year. I had bought an extra copy to read, but my father, who was visiting us from India, took it with him to read on the flight. Luckily, I found the audiobook in the city library. I enjoyed Vanessa's writing style, which mixes personal anecdotes with her research findings. I learned a few things, which I am putting into practice now.
 
 
 13. **And Thereby Hangs a Tale** by *Jeffrey Archer* [Amazon](https://www.amazon.com/Thereby-Hangs-Tale-Archer/dp/0330453149/)
 
-Another short stories collection by Jeffrey Archer. I liked it less than *Tell tale* but it is still a very nice collection.
+This is another short story collection by Jeffrey Archer. I liked it less than *Tell Tale* but it is still a lovely collection.
 
 12. **The Frackers** by *Gregory Zuckerman* [Amazon](https://www.amazon.com/Frackers-Outrageous-Inside-Billionaire-Wildcatters/dp/1591847095)
 
-Greg Zuckerman is a Wall Street Journal reporter and a bestselling author of *The Man Who Solved the Market* and *The Greatest Trade Ever*, so this book was on my list for a long time. The book chronicles the history of fracking and how it made US an exporter of natural gas and oil. 
+Greg Zuckerman is a Wall Street Journal reporter and a bestselling author of *The Man Who Solved the Market* and *The Greatest Trade Ever*, so this book was on my list for a long time. The book chronicles the history of fracking and how it made the US an exporter of natural gas and oil. 
 
 11. **Cognitive Surplus** by *Clay Shirky* [Amazon](https://www.amazon.com/Cognitive-Surplus-Technology-Consumers-Collaborators/dp/0143119583/)
 
-Clay Shirky is one of my favorite authors because he has an uncanny ability to describe and predict the consequences of technology adoption. In this book, he argues that technology is creating massive cognitive surplus by allowing collaborations among people. This book was published in 2011, so we can now look back and see how much he observed and predicted turns out to be true. This book is relevant even today.
+Clay Shirky is one of my favorite authors because he has an uncanny ability to describe and predict the consequences of technology adoption. In this book, he argues that technology creates a massive cognitive surplus by allowing collaboration among people. This book was published in 2011, so we can now look back and see how much he observed and predicted turned out to be true. This book is relevant even today.
+
 
 ### February 2024
 
