@@ -1,0 +1,194 @@
+---
+title: "Performance of QQQ and SPY since 2017"
+subtitle: ""
+description: ""
+author: "Ashwin malshe"
+date: "2025-11-01"
+image-alt: ""
+categories: [stocks, investment]
+date-modified: "2025-11-01"
+draft: FALSE
+---
+
+::: {.callout-note}
+**Disclaimer**: this is not an investment advice. My objective is to visualize and compare ETF performances. 
+
+**Disclosure**: I own all the ETFs mentioned in this post.
+:::
+
+I have been investing in stocks for a quarter of a century now. I have been a risk seeking investors and my personal style of investing can be pretty much summarized as momentum chasing. However, most of my investment portfolio is in ETFs rather than in individual stocks. Often my students ask me which ETFs are good as beginners. Given that there are now [more than 4,000 ETFs in the US](https://ycharts.com/indicators/us_number_of_etfs), ETF picking is at least as complicated as stock picking. Having said that, I like ETFs investing in S&P 500 and NASDAQ 100 stocks. Traditionally, people have been recommending SPY and QQQ for S&P 500 and NASDAQ 100 exposures, respectively. Recently, QQQM has emerged as a cheaper option to QQQ. However, the expense ratios of these ETFs are quite high. I prefer to invest in an ETF with low expense ratio. Why? Schwab explains it as follows:
+
+> *An ETF's operating expense ratio is the annual rate that the fund (not your brokerage) charges on the total assets it holds to pay for portfolio management, administration, and other costs. As an ongoing expense, the operating expense ratio is relevant for all investors but particularly for long-term, buy-and-hold investors.* [https://www.schwab.com/learn/story/etfs-how-much-do-they-really-cost](https://www.schwab.com/learn/story/etfs-how-much-do-they-really-cost)
+
+SPY and QQQM have expense ratios of 0.0945% and 0.15%, respectively. Vanguard's VOO ETF is a cheaper alternative to SPY with only 0.03% expense ratio. I am not aware of any perfect cheaper substitute for QQQM but VUG (0.04% expense ratio) and VGT (0.1% expense ratio), both from Vanguard, are commonly mentioned in the media.
+
+Let's compare $100 invested in each of SPY, QQQ, VUG, and VGT since the beginning of 2007. I am using QQQ here because QQQM is recent and doesn't have a really long time series. Next, we will also add VOO but start the comparison from September 2010 as its data is unavailable before that.
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| label: setup
+
+library(highcharter)
+library(quantmod)
+library(tidyverse)
+library(tbl2xts)
+
+dt_clean = function(.series, var_name, filter_date = NULL){
+
+  if (is.null(filter_date)) {
+    mydt = .series |> as_tibble(rownames = "date")
+  } else {
+    mydt = .series |> as_tibble(rownames = "date") |> filter(date >= as.Date(filter_date))
+  }
+  
+  mydt |> 
+      dplyr::mutate(
+      ret = ({{var_name}} - lag({{var_name}})) / lag({{var_name}}),
+      date = as.Date(date),
+      invest = 100 * cumprod(ifelse(is.na(ret), 1, 1 + ret))
+    ) |> 
+    select(date, invest)|> 
+    tbl_xts() # converts the tibble back to XTS
+}
+
+qqq = getSymbols("QQQ",  auto.assign = FALSE)
+spy = getSymbols("SPY",  auto.assign = FALSE)
+voo = getSymbols("VOO",  auto.assign = FALSE)
+vug = getSymbols("VUG",  auto.assign = FALSE)
+vgt = getSymbols("VGT",  auto.assign = FALSE)
+
+qqq2 = dt_clean(qqq, QQQ.Adjusted)
+spy2 = dt_clean(spy, SPY.Adjusted)
+voo2 = dt_clean(voo, VOO.Adjusted)
+vug2 = dt_clean(vug, VUG.Adjusted)
+vgt2 = dt_clean(vgt, VGT.Adjusted)
+
+qqq3 = dt_clean(qqq, QQQ.Adjusted, "2010-09-09")
+spy3 = dt_clean(spy, SPY.Adjusted, "2010-09-09")
+vug3 = dt_clean(vug, VUG.Adjusted, "2010-09-09")
+vgt3 = dt_clean(vgt, VGT.Adjusted, "2010-09-09")
+
+```
+
+
+```{r}
+#| label: plot1
+#| echo: false
+
+hc <- highchart(type = "stock") |> 
+  hc_add_series(qqq2, id = 1, name = "QQQ") |> 
+  hc_add_series(spy2, id = 2, name = "SPY") |>
+  hc_add_series(vug2, id = 3, name = "VUG") |> 
+  hc_add_series(vgt2, id = 4, name = "VGT") |>
+  hc_tooltip(valueDecimals = 2) |> 
+  hc_caption(text = "ETF returns account for splits, dividends, etc. Data is from Yahoo Finance and downloaded using quantmod R package") |> 
+  hc_add_theme(hc_theme_538())
+
+hc
+```
+
+<br>
+The above chart covers the Great Financial Crisis as well as the COVID-19 pandemic. Over these approximately 19 years (Jan 2017 through October 2025), for an investment of $100, VGT returned a staggering \$1,770 and QQQ returned equally impressive \$1,696. VUG returned \$1,053 and SPY returned \$686. All of these are great returns.
+
+Next, I add VOO to the mix. VOO is essentially SPY but with very low expense ratio.
+
+```{r}
+#| label: plot2
+#| echo: false
+
+hc2 <- highchart(type = "stock") |> 
+  hc_add_series(qqq3, id = 1, name = "QQQ") |> 
+  hc_add_series(spy3, id = 2, name = "SPY") |>
+  hc_add_series(vug3, id = 3, name = "VUG") |> 
+  hc_add_series(vgt3, id = 4, name = "VGT") |>
+  hc_add_series(voo2, id = 5, name = "VOO") |>
+  hc_tooltip(valueDecimals = 2) |> 
+  hc_caption(text = "ETF returns account for splits, dividends, etc. Data is from Yahoo Finance and downloaded using quantmod R package") |> 
+  hc_add_theme(hc_theme_538())
+
+hc2
+```
+
+<br>
+As you can see, for $100 invested on September 9, 2010, VOO and SPY returned \$817 and \$813, respectively. Of course, this excludes the recessionary period due to the Great Financial Crisis.  
+
+<br>
+
+```{r}
+#| eval: false
+#| code-fold: true
+#| code-summary: "Show the R code"
+
+library(highcharter)
+library(quantmod)
+library(tidyverse)
+library(tbl2xts)
+
+## Function to clean up the XTS object
+
+dt_clean = function(.series, var_name, filter_date = NULL){
+
+  if (is.null(filter_date)) {
+    mydt = .series |> as_tibble(rownames = "date")
+  } else {
+    mydt = .series |> as_tibble(rownames = "date") |> filter(date >= as.Date(filter_date))
+  }
+  
+  mydt |> 
+      dplyr::mutate(
+      ret = ({{var_name}} - lag({{var_name}})) / lag({{var_name}}),
+      date = as.Date(date),
+      invest = 100 * cumprod(ifelse(is.na(ret), 1, 1 + ret))
+    ) |> 
+    select(date, invest)|> 
+    tbl_xts() # converts the tibble back to XTS
+}
+
+qqq = getSymbols("QQQ",  auto.assign = FALSE)
+spy = getSymbols("SPY",  auto.assign = FALSE)
+voo = getSymbols("VOO",  auto.assign = FALSE)
+vug = getSymbols("VUG",  auto.assign = FALSE)
+vgt = getSymbols("VGT",  auto.assign = FALSE)
+
+qqq2 = dt_clean(qqq, QQQ.Adjusted)
+spy2 = dt_clean(spy, SPY.Adjusted)
+voo2 = dt_clean(voo, VOO.Adjusted)
+vug2 = dt_clean(vug, VUG.Adjusted)
+vgt2 = dt_clean(vgt, VGT.Adjusted)
+
+qqq3 = dt_clean(qqq, QQQ.Adjusted, "2010-09-09")
+spy3 = dt_clean(spy, SPY.Adjusted, "2010-09-09")
+vug3 = dt_clean(vug, VUG.Adjusted, "2010-09-09")
+vgt3 = dt_clean(vgt, VGT.Adjusted, "2010-09-09")
+
+## Plot 1
+
+hc = highchart(type = "stock") |> 
+  hc_add_series(qqq2, id = 1, name = "QQQ") |> 
+  hc_add_series(spy2, id = 2, name = "SPY") |>
+  hc_add_series(vug2, id = 3, name = "VUG") |> 
+  hc_add_series(vgt2, id = 4, name = "VGT") |>
+  hc_tooltip(valueDecimals = 2) |> 
+  hc_caption(text = "ETF returns account for splits, dividends, etc. 
+             Data is from Yahoo Finance and downloaded using quantmod R package") |> 
+  hc_add_theme(hc_theme_538())
+
+hc
+
+## Plot 2
+
+hc2 = highchart(type = "stock") |> 
+  hc_add_series(qqq3, id = 1, name = "QQQ") |> 
+  hc_add_series(spy3, id = 2, name = "SPY") |>
+  hc_add_series(vug3, id = 3, name = "VUG") |> 
+  hc_add_series(vgt3, id = 4, name = "VGT") |>
+  hc_add_series(voo2, id = 5, name = "VOO") |>
+  hc_tooltip(valueDecimals = 2) |> 
+  hc_caption(text = "ETF returns account for splits, dividends, etc. Data is from Yahoo Finance and downloaded using quantmod R package") |> 
+  hc_add_theme(hc_theme_538())
+
+hc2
+```
+
