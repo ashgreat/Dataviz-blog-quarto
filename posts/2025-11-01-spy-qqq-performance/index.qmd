@@ -2,13 +2,18 @@
 title: "Performance of various ETFs since 2007"
 subtitle: ""
 description: ""
-author: "Ashwin malshe"
 date: "2025-11-01"
 image-alt: ""
 categories: [stocks, investment]
-date-modified: "2025-11-01"
+date-modified: "2025-11-14"
 draft: FALSE
 ---
+
+```{r}
+#| echo: false
+knitr::include_graphics(here::here("Images/AdobeStock.jpeg"))
+```
+
 
 ::: {.callout-note}
 **Disclaimer**: this is not an investment advice. My objective is to visualize and compare ETF performances. 
@@ -90,7 +95,7 @@ hc
 ```
 
 <br>
-The above chart covers the Great Financial Crisis as well as the COVID-19 pandemic. Over these approximately 19 years (Jan 2017 through October 2025), for an investment of $100, VGT returned a staggering \$1,770 and QQQ returned equally impressive \$1,696. VUG returned \$1,053 and SPY returned \$686. All of these are great returns.
+The above chart covers the Great Financial Crisis as well as the COVID-19 pandemic. Over these approximately 19 years (Jan 2007 through October 2025), for an investment of $100, VGT returned a staggering \$1,770 and QQQ returned equally impressive \$1,696. VUG returned \$1,053 and SPY returned \$686. All of these are great returns.
 
 Next, I add VOO to the mix. VOO is essentially SPY but with very low expense ratio.
 

@@ -4,6 +4,7 @@ project:
 website:
   title: "Dataviz Blog"
   navbar:
+    background: primary
     right:
       - about.qmd
       - icon: github
@@ -13,13 +14,12 @@ website:
 
 author:
   - name: Ashwin Malshe
-    url: https://business.utsa.edu/faculty/ashwin-malshe/
+    url: https://business.utsa.edu/faculty/profiles/malshe-ashwin.html
     
 format:
   html:
-    theme: 
-      light: [litera, styles.scss]
-      dark: [superhero, styles.scss]
+    theme:
+      - default
+      - styles.scss
       
 editor: source
-

@@ -1,8 +1,111 @@
 
 /*-- scss:defaults --*/
 
-// import google fonts
-@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&family=Fira+Code&family=Roboto+Mono:wght@300;400&family=Sora:wght@300;400;500;600;700;800&display=swap');
+// Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=EB+Garamond:wght@400;500;600;700&display=swap');
 
-// use Sora font if available
-$font-family-sans-serif:  "Sora", sans-serif !default;
+// Typography
+$font-family-sans-serif: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
+$headings-font-family: "EB Garamond", Garamond, Georgia, serif !default;
+
+// Brand colors inspired by The Nation
+$primary: #E8192B !default; // The Nation's exact red
+$body-color: #111 !default;
+$link-color: $primary !default;
+
+/*-- scss:rules --*/
+
+// Map Bootstrap/Quarto CSS vars to Inter to ensure consistency
+:root {
+  --bs-font-sans-serif: #{$font-family-sans-serif};
+  --bs-body-font-family: var(--bs-font-sans-serif);
+  --bs-primary: #{$primary};
+  --bs-navbar-bg: #{$primary};
+  --bs-navbar-color: #ffffff;
+  --bs-navbar-hover-color: #ffeaea;
+  --bs-navbar-brand-color: #ffffff;
+  --bs-navbar-brand-hover-color: #ffffff;
+}
+
+// Base text (strong specificity to defeat theme overrides)
+html body { font-family: var(--bs-body-font-family) !important; color: $body-color; font-weight: 300; }
+.content p, .content li, .content blockquote,
+article p, article li, article blockquote,
+.page-columns-main p, .page-columns-main li, .page-columns-main blockquote,
+.quarto-article p, .quarto-article li, .quarto-article blockquote {
+  font-family: var(--bs-body-font-family) !important;
+  font-weight: 300;
+}
+
+// Headings: strong serif voice
+h1, h2, h3, h4, h5, h6,
+.title, .quarto-title h1,
+main .content h1, main .content h2, main .content h3, main .content h4, main .content h5, main .content h6,
+.quarto-article h1, .quarto-article h2, .quarto-article h3, .quarto-article h4, .quarto-article h5, .quarto-article h6 {
+  font-family: $headings-font-family !important; letter-spacing: -0.01em;
+}
+
+// Navbar: bold red bar with white text
+// Robust navbar overrides (works across Bootswatch variants)
+#quarto-header .navbar,
+.navbar, .navbar.navbar-expand-lg, .navbar.navbar-light, .navbar.navbar-dark, .navbar.bg-body-tertiary, #quarto-header .navbar.bg-body-tertiary {
+  background-color: $primary !important; box-shadow: none; border-bottom: 0;
+}
+#quarto-header .navbar .navbar-brand,
+.navbar .navbar-brand { color: #fff !important; font-family: $headings-font-family !important; font-weight: 700; letter-spacing: .01em; }
+#quarto-header .navbar .nav-link,
+.navbar .navbar-nav .nav-link { color: #fff !important; text-transform: uppercase; letter-spacing: 0.02em; font-weight: 600; }
+#quarto-header .navbar .nav-link:hover,
+.navbar .navbar-nav .nav-link:hover { color: #ffeaea !important; }
+#quarto-header .navbar .nav-link i,
+.navbar .navbar-nav .nav-link i,
+.navbar .bi { color: #fff !important; }
+
+// Links
+a { color: $link-color; }
+a:hover { color: darken($link-color, 8%); }
+
+// Author name: always red (whether link or plain text)
+.quarto-title-meta .author,
+.quarto-title-meta .author a,
+.quarto-title-author,
+.quarto-title-author-name,
+.metadata .author,
+.metadata .author a {
+  color: $link-color !important;
+}
+
+// Listing grid cards (homepage)
+.quarto-listing .quarto-grid-item .card, .quarto-listing .card {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform .12s ease;
+}
+.quarto-listing .quarto-grid-item .card:hover, .quarto-listing .card:hover { transform: translateY(-2px); }
+.quarto-listing .quarto-grid-item .card-title, .quarto-listing .card .card-title { font-family: $headings-font-family; font-weight: 600; font-size: 1.05rem; }
+.quarto-listing .quarto-grid-item .card-img-top, .quarto-listing .card .card-img-top { aspect-ratio: 16/9; object-fit: cover; }
+
+// Make landing page listing text slightly smaller
+.quarto-listing .quarto-grid-item .card-text,
+.quarto-listing .quarto-grid-item .listing-date,
+.quarto-listing .quarto-grid-item .card-subtitle,
+.quarto-listing .card .card-text,
+.quarto-listing .card .listing-date,
+.quarto-listing .card .card-subtitle,
+.quarto-listing .card .listing-categories { font-size: 0.9rem; }
+
+// Categories sidebar: smaller font for list items
+.quarto-listing-category .category a,
+.quarto-listing-category .category-item,
+#quarto-margin-sidebar .category a,
+#quarto-margin-sidebar .quarto-listing-category .category {
+  font-size: 0.85rem;
+}
+
+// Article page: improve readability
+main .content p, .quarto-article p { line-height: 1.7; font-size: 0.9rem; font-family: var(--bs-body-font-family) !important; font-weight: 300; }
+main .content figure figcaption { color: #555; font-size: 0.9rem; }
+
+// Keep code blocks monospaced
+pre, code, kbd, samp { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important; }

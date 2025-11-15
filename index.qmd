@@ -1,5 +1,5 @@
 ---
-title: "Dataviz-Blog-Quarto"
+title: "Insights through Data Visualization"
 listing:
   contents: posts
   sort: "date desc"

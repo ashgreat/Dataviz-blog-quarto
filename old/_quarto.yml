@@ -1,0 +1,25 @@
+project:
+  type: website
+
+website:
+  title: "Dataviz Blog"
+  navbar:
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/
+      - icon: twitter
+        href: https://twitter.com
+
+author:
+  - name: Ashwin Malshe
+    url: https://business.utsa.edu/faculty/ashwin-malshe/
+    
+format:
+  html:
+    theme: 
+      light: [litera, styles.scss]
+      dark: [superhero, styles.scss]
+      
+editor: source
+

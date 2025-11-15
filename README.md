@@ -1,1 +1,1 @@
-# Dataviz-blog-quarto
+# Insights through data visualization

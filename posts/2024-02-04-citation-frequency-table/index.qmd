@@ -2,16 +2,18 @@
 title: "Citation Frequency Table"
 subtitle: ""
 description: ""
-author: "Ashwin Malshe"
 date: "2024-02-04"
-image: ""
 image-alt: ""
 categories: [Utility, Shiny]
-date-modified: "2024-02-06"
+date-modified: "2025-11-14"
 draft: FALSE
 filters:
   - shinylive
 ---
+```{r}
+#| echo: false
+knitr::include_graphics(here::here("Images/AdobeStock_646043882.jpeg"))
+```
 
 This is a serverless app that lets you upload your Word document and outputs a table of citations frequencies, which you can download as csv and Excel formats. A serverless app runs entirely in your browser so your uploaded file stays on your computer. It does not leave the computer. **You can use it even without an Internet connection _once it is fully initialized in the browser_.**
 
