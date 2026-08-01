@@ -6,7 +6,8 @@ author: "Ashwin Malshe"
 date: "2026-07-31"
 date-modified: "2026-07-31"
 categories: [econometrics, endogeneity, copula, interactive]
-image-alt: ""
+image: ../../Images/pexels-steve-12833265.jpg
+image-alt: "Abstract render of smooth rolling peaks in amber and blue, resembling a probability density surface."
 draft: false
 resources:
   - stats.js
