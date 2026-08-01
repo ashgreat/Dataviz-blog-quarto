@@ -13,6 +13,10 @@ resources:
   - stats.js
 ---
 
+::: {.callout-note}
+This post is entirely written by Anthropic's Opus 5 model. My key objective for using AI was to create the visualizations, which are a little beyond my expertise. However, I also asked it to write an explanation for the Gaussian copula and provide more details to complete this post.
+:::
+
 Every empirical paper that regresses sales on price eventually runs into the same referee comment: *price is endogenous*. Firms do not set prices at random. They set them knowing things about demand that you, the analyst, never observe. Whatever those things are, they sit in your error term and they are correlated with the regressor you care most about.
 
 The textbook answer is an instrumental variable. The practical problem with the textbook answer is that good instruments are scarce, and a weak instrument leaves you worse off than doing nothing. So there is real appeal in a method that needs no instrument at all.
