@@ -1,0 +1,557 @@
+---
+title: "Gaussian Copula for Endogeneity Correction"
+subtitle: "An interactive tour of Park and Gupta's instrument-free control function, and the assumptions that decide whether it works"
+description: "What a Gaussian copula actually is, how it turns an endogeneity problem into an extra regressor, and why the whole thing collapses when your endogenous variable is normally distributed."
+author: "Ashwin Malshe"
+date: "2026-07-31"
+date-modified: "2026-07-31"
+categories: [econometrics, endogeneity, copula, interactive]
+image-alt: ""
+draft: false
+resources:
+  - stats.js
+---
+
+Every empirical paper that regresses sales on price eventually runs into the same referee comment: *price is endogenous*. Firms do not set prices at random. They set them knowing things about demand that you, the analyst, never observe. Whatever those things are, they sit in your error term and they are correlated with the regressor you care most about.
+
+The textbook answer is an instrumental variable. The practical problem with the textbook answer is that good instruments are scarce, and a weak instrument leaves you worse off than doing nothing. So there is real appeal in a method that needs no instrument at all.
+
+Park and Gupta ([2012](https://doi.org/10.1287/mksc.1120.0718)) proposed exactly that. If the endogenous regressor is non-normally distributed, you can construct the correction *out of the regressor itself*. No exclusion restriction, no outside variable, one extra column in your design matrix.
+
+That sounds too good to be true, and the honest answer is that it is conditionally true. The method rests on assumptions that are easy to state and easy to violate, and the literature since 2012 has been mostly about mapping out where it breaks. This post builds the method up from scratch, with widgets you can push around, and then makes every assumption explicit and shows you what each one looks like when it fails.
+
+::: {.callout-note}
+The R code uses [`endogCopula`](https://github.com/ashgreat/endogCopula), my package implementing eight copula-based estimators behind a single `copreg()` entry point.
+
+```r
+remotes::install_github("ashgreat/endogCopula")
+```
+:::
+
+```{ojs}
+//| echo: false
+S = import(new URL("stats.js", location.href).href)
+```
+
+```{ojs}
+//| echo: false
+// Shared look. Truth is dark and dashed, the biased estimate is warm, the
+// corrected estimate is cool.
+COL = ({truth: "#22223b", naive: "#d1495b", pg: "#2a9d8f", muted: "#8d99ae"})
+```
+
+```{ojs}
+//| echo: false
+html`<style>
+.wdg { border: 1px solid #e3e3e3; border-radius: 6px; padding: 1rem 1.1rem 0.6rem;
+       margin: 1.6rem 0; background: #fcfcfc; }
+.wdg h4 { margin: 0 0 0.2rem; font-size: 0.95rem; letter-spacing: 0.02em;
+          text-transform: uppercase; color: #6b7280; font-weight: 600; }
+.wdg .sub { margin: 0 0 0.9rem; font-size: 0.9rem; color: #6b7280; }
+.readout { display: flex; flex-wrap: wrap; gap: 1.4rem; margin: 0.7rem 0 0.2rem;
+           font-variant-numeric: tabular-nums; }
+.readout div { font-size: 0.85rem; color: #6b7280; }
+.readout b { display: block; font-size: 1.25rem; color: #22223b; font-weight: 600; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.8rem; }
+.panel-note { font-size: 0.8rem; color: #8d99ae; text-align: center; margin: 0.2rem 0 0; }
+.bad b { color: #d1495b; }
+.good b { color: #2a9d8f; }
+
+/* Quarto has no chunk option that suppresses OJS output: echo=false hides only
+   the source, and output=false is silently ignored. Without this rule every
+   named data cell prints an inspector line like "w2fit = Object {...}".
+   Inputs widgets each render a form element; data cells render none, and plots
+   and readouts are anonymous expression cells, so neither is affected.
+   NB: no backticks in this comment -- the cell is a JS template literal. */
+div[data-nodetype="declaration"]:not(:has(form)) { display: none; }
+</style>`
+```
+
+## What a copula actually is
+
+Start with the definition, because "copula" gets used loosely and the loose version will not help you here.
+
+Take any two random variables $P$ and $\xi$ with a joint distribution $F(p, x)$ and marginals $F_P$ and $F_\xi$. Sklar's theorem says that joint distribution always factors into two separate pieces:
+
+$$F(p, x) = C\big(F_P(p),\; F_\xi(x)\big)$$
+
+The marginals $F_P$ and $F_\xi$ describe each variable on its own. The function $C$ describes *only* how they move together. That function is the copula.
+
+The mechanism is the probability integral transform. If $P$ is continuous, then $U = F_P(P)$ is Uniform$(0,1)$ no matter what $P$ looked like. Same for $V = F_\xi(\xi)$. The copula is simply the joint distribution of that pair $(U, V)$, both marginals flattened out to uniform, so nothing is left but the dependence.
+
+The consequence worth internalizing: **the copula is invariant to strictly increasing transformations of the marginals.** Take logs of $P$, square it, rescale it in dollars instead of euros. The copula does not move. Push the marginal selector below and watch the left panel change shape completely while the middle and right panels stay frozen.
+
+::: {.wdg}
+<h4>Widget 1 — the copula is the dependence, and nothing else</h4>
+<p class="sub">400 draws. Every marginal here is a strictly increasing transform of the same underlying normal draw, which is why only the first panel can move.</p>
+
+```{ojs}
+//| echo: false
+viewof w1rho = Inputs.range([-0.9, 0.9], {value: 0.6, step: 0.05, label: "ρ (dependence)"})
+```
+
+```{ojs}
+//| echo: false
+viewof w1marg = Inputs.select(Object.keys(S.MARGINALS), {
+  value: "lognormal",
+  label: "Marginal of P",
+  format: (k) => S.MARGINALS[k].label
+})
+```
+
+```{ojs}
+//| echo: false
+w1data = {
+  const rng = S.makeRng(20260731);
+  const g = S.MARGINALS[w1marg].g;
+  return S.rbinorm(400, w1rho, rng).map(([z1, z2]) => ({
+    P: g(z1), xi: z2,
+    u: S.pnorm(z1), v: S.pnorm(z2),
+    Pstar: z1, xistar: z2
+  }));
+}
+```
+
+```{ojs}
+//| echo: false
+{
+  const w = Math.max(200, Math.min(width, 760) / 3 - 12);
+  const dots = (x, y) => Plot.dot(w1data, {x, y, r: 1.9, fill: COL.muted, fillOpacity: 0.75});
+  const base = {width: w, height: w, marginLeft: 42, marginBottom: 36, grid: true};
+
+  const a = Plot.plot({...base, x: {label: "P"}, y: {label: "ξ"}, marks: [dots("P", "xi")]});
+  const b = Plot.plot({...base, x: {label: "F_P(P)", domain: [0, 1]},
+                       y: {label: "F_ξ(ξ)", domain: [0, 1]}, marks: [dots("u", "v")]});
+  const c = Plot.plot({...base, x: {label: "P* = Φ⁻¹(F_P(P))"}, y: {label: "ξ* = ξ/σ"},
+                       marks: [dots("Pstar", "xistar")]});
+
+  return html`<div class="grid3">
+    <div>${a}<p class="panel-note">the data as you observe it</p></div>
+    <div>${b}<p class="panel-note">the copula — uniform margins</p></div>
+    <div>${c}<p class="panel-note">normal scores — an ellipse</p></div>
+  </div>`;
+}
+```
+:::
+
+The middle panel is the copula. The right panel is the same thing viewed through $\Phi^{-1}$, which turns the unit square back into a plane and, when the copula is Gaussian, turns the cloud into a tidy ellipse.
+
+## Why the Gaussian copula gives you a regressor
+
+A **Gaussian copula** is the copula you get by taking a bivariate normal and flattening its marginals:
+
+$$C(u, v; \rho) = \Phi_\rho\big(\Phi^{-1}(u),\, \Phi^{-1}(v)\big)$$
+
+It has exactly one parameter, $\rho$. Assuming it is a real assumption about the shape of dependence, not a free lunch, and we will come back to that.
+
+Now put it to work. The structural model is
+
+$$y = \beta_0 + \beta_1 P + \beta_2 W + \xi$$
+
+where $P$ is endogenous and $W$ is exogenous. Define the normal scores
+
+$$P^* = \Phi^{-1}\big(H(P)\big), \qquad \xi^* = \xi / \sigma_\xi$$
+
+where $H$ is the marginal CDF of $P$. Assume (i) $\xi$ is normal and (ii) the dependence between $P$ and $\xi$ is Gaussian-copular. Together these say precisely that $(P^*, \xi^*)$ is bivariate standard normal with correlation $\rho$.
+
+For a bivariate normal, the conditional mean is linear. So
+
+$$E[\xi^* \mid P^*] = \rho P^* \quad\Longrightarrow\quad E[\xi \mid P] = \rho\,\sigma_\xi\,\Phi^{-1}\big(H(P)\big)$$
+
+Conditioning on $P$ and on $P^*$ is the same thing, since $H$ is monotone. And that is the whole method. The part of the error that depends on $P$ has a closed form, it is proportional to $P^*$, so put $P^*$ in the regression:
+
+$$y = \beta_0 + \beta_1 P + \beta_2 W + \gamma P^* + u, \qquad \gamma = \rho\,\sigma_\xi$$
+
+The endogeneity has been converted into an omitted variable, and then un-omitted. This is a control function, in the same family as Heckman's inverse Mills ratio, except the control function is built from the regressor's own empirical distribution instead of from an outside instrument.
+
+Two things fall out for free. $\hat\gamma$ estimates $\rho\sigma_\xi$, so testing $H_0: \gamma = 0$ is a test for endogeneity. And $\hat\gamma$'s sign tells you which way naive OLS was wrong.
+
+::: {.wdg}
+<h4>Widget 2 — the bias, and the correction</h4>
+<p class="sub">True slope is 2. Drag ρ and watch naive OLS walk away from it while the corrected estimate stays put.</p>
+
+```{ojs}
+//| echo: false
+viewof w2rho = Inputs.range([-0.9, 0.9], {value: 0.6, step: 0.05, label: "ρ (endogeneity)"})
+```
+
+```{ojs}
+//| echo: false
+viewof w2n = Inputs.range([100, 2000], {value: 500, step: 50, label: "n"})
+```
+
+```{ojs}
+//| echo: false
+w2fit = {
+  const d = S.simulate({n: w2n, rho: w2rho, sigma: 1.0, seed: 424242});
+  return {...d, ...S.fitBoth(d)};
+}
+```
+
+```{ojs}
+//| echo: false
+{
+  const {P, y, naive, pg} = w2fit;
+  const pts = P.map((p, i) => ({P: p, y: y[i]}));
+  // P is standardised lognormal, so a handful of extreme draws would otherwise
+  // stretch both axes and squash the three lines together. Clip to the bulk.
+  const q = (arr, p) => {
+    const s = [...arr].sort((a, b) => a - b);
+    return s[Math.min(s.length - 1, Math.round(p * (s.length - 1)))];
+  };
+  const xs = [q(P, 0), q(P, 0.98)];
+  const line = (f, key) => xs.map((x) => ({x, y: f(x), key}));
+
+  return Plot.plot({
+    width: Math.min(width, 700), height: 400, marginLeft: 46, marginBottom: 40, grid: true,
+    x: {label: "P (endogenous regressor, standardised)", domain: xs},
+    y: {label: "y", domain: [q(y, 0.005), q(y, 0.99)]},
+    color: {domain: ["true β₁ = 2", "naive OLS", "copula-corrected"],
+            range: [COL.truth, COL.naive, COL.pg], legend: true},
+    marks: [
+      Plot.dot(pts, {x: "P", y: "y", r: 1.8, fill: COL.muted, fillOpacity: 0.4}),
+      Plot.line(line((x) => 1 + 2 * x, "true β₁ = 2"),
+                {x: "x", y: "y", stroke: "key", strokeWidth: 2.5, strokeDasharray: "6 4"}),
+      Plot.line(line((x) => naive.beta[0] + naive.beta[1] * x, "naive OLS"),
+                {x: "x", y: "y", stroke: "key", strokeWidth: 2.5}),
+      Plot.line(line((x) => pg.beta[0] + pg.beta[1] * x, "copula-corrected"),
+                {x: "x", y: "y", stroke: "key", strokeWidth: 2.5})
+    ]
+  });
+}
+```
+
+```{ojs}
+//| echo: false
+html`<div class="readout">
+  <div class="bad">naive OLS β̂₁<b>${w2fit.naive.beta[1].toFixed(3)}</b></div>
+  <div class="good">corrected β̂₁<b>${w2fit.pg.beta[1].toFixed(3)}</b></div>
+  <div>γ̂ (copula term)<b>${w2fit.pg.beta[3].toFixed(3)}</b></div>
+  <div>ρ·σ<sub>ξ</sub> (truth)<b>${w2rho.toFixed(2)}</b></div>
+</div>`
+```
+:::
+
+Note that $\hat\gamma$ tracks $\rho\sigma_\xi$ as you drag, which is the theory above showing up numerically. Note also that at $\rho = 0$ the two estimates coincide: the correction costs you nothing in bias when there was no endogeneity, only a little precision.
+
+## The assumptions
+
+This is the part that matters. The method is not hard to run; it is hard to *justify*. `endogCopula` ships a `validity()` method that walks these one at a time, so I have organised this section to match its four steps.
+
+### [1] The endogenous regressor must be non-normal
+
+This is not a regularity condition. It is the entire source of identification, and it is worth seeing why.
+
+Suppose $P \sim N(\mu, \sigma_P^2)$. Then $H(p) = \Phi\!\big((p - \mu)/\sigma_P\big)$, so
+
+$$P^* = \Phi^{-1}\big(H(P)\big) = \frac{P - \mu}{\sigma_P}$$
+
+The copula term is an *exact linear function of* $P$. Adding it to a regression that already contains $P$ and an intercept adds a perfectly collinear column. There is nothing to estimate. The design matrix is singular, and no amount of data will fix it.
+
+So the method runs on departure from normality. The further $P$ is from normal, the more $\Phi^{-1}(H(\cdot))$ bends away from a straight line, and the more independent variation the copula term carries. Drag the slider below from right to left and watch the curve straighten.
+
+::: {.wdg}
+<h4>Widget 3 — the identification cliff</h4>
+<p class="sub">P is lognormal with log-scale σ. As σ → 0 it becomes normal, the copula term becomes a straight line in P, and the estimator dies.</p>
+
+```{ojs}
+//| echo: false
+viewof w3sigma = Inputs.range([0.02, 1.2], {value: 0.8, step: 0.02, label: "σ (log-scale of P)"})
+```
+
+```{ojs}
+//| echo: false
+w3one = {
+  const d = S.simulate({n: 600, rho: 0.6, sigma: w3sigma, seed: 987});
+  const f = S.fitBoth(d);
+  return {
+    ...d, ...f,
+    skew: S.skewness(d.P),
+    rPC: S.corr(d.P, f.cop),
+    omega: S.omega(d.P, d.W, f.cop),
+    se: f.pg ? f.pg.se[1] : NaN
+  };
+}
+```
+
+```{ojs}
+//| echo: false
+// Sweep sigma once so the reader can see the whole curve, not just one point.
+w3sweep = {
+  const out = [];
+  for (let s = 0.04; s <= 1.24; s += 0.04) {
+    const d = S.simulate({n: 600, rho: 0.6, sigma: s, seed: 987});
+    const f = S.fitBoth(d);
+    if (!f.pg) continue;
+    out.push({sigma: s, skew: S.skewness(d.P), se: f.pg.se[1],
+              omega: S.omega(d.P, d.W, f.cop)});
+  }
+  return out;
+}
+```
+
+```{ojs}
+//| echo: false
+{
+  const w = Math.max(240, Math.min(width, 720) / 2 - 10);
+  const cur = w3one;
+
+  const left = Plot.plot({
+    width: w, height: 300, marginLeft: 46, marginBottom: 40, grid: true,
+    x: {label: "P"}, y: {label: "P* = Φ⁻¹(H(P))"},
+    marks: [
+      Plot.dot(cur.P.map((p, i) => ({p, c: cur.cop[i]})),
+               {x: "p", y: "c", r: 2, fill: COL.pg, fillOpacity: 0.55})
+    ]
+  });
+
+  const right = Plot.plot({
+    width: w, height: 300, marginLeft: 56, marginBottom: 40, grid: true,
+    x: {label: "skewness of P"},
+    // Plot's default log ticks render 0.4 as "400m", which reads as nonsense.
+    y: {label: "standard error of β̂₁", type: "log", tickFormat: (d) => d.toFixed(2)},
+    marks: [
+      Plot.ruleX([1.932], {stroke: COL.naive, strokeDasharray: "4 3"}),
+      Plot.text([{x: 1.932}], {
+        x: "x", frameAnchor: "top", text: () => "Becker et al.\nthreshold",
+        textAnchor: "start", dx: 5, dy: 6, lineHeight: 1.1,
+        fill: COL.naive, fontSize: 10
+      }),
+      Plot.line(w3sweep, {x: "skew", y: "se", stroke: COL.muted, strokeWidth: 2}),
+      Plot.dot([cur], {x: "skew", y: "se", r: 6, fill: COL.pg})
+    ]
+  });
+
+  return html`<div class="grid3">
+    <div>${left}<p class="panel-note">the copula term against P</p></div>
+    <div>${right}<p class="panel-note">precision collapses as skewness → 0</p></div>
+  </div>`;
+}
+```
+
+```{ojs}
+//| echo: false
+html`<div class="readout">
+  <div>skewness of P<b>${w3one.skew.toFixed(2)}</b></div>
+  <div>corr(P, P*)<b>${w3one.rPC.toFixed(4)}</b></div>
+  <div>ω = 1 − R²<b>${w3one.omega.toFixed(4)}</b></div>
+  <div class="${w3one.se > 0.25 ? "bad" : "good"}">SE(β̂₁)<b>${w3one.se.toFixed(3)}</b></div>
+</div>`
+```
+:::
+
+That $\omega$ readout is the same quantity `endogCopula` prints under "Collinearity of the copula terms". It is one minus the $R^2$ from regressing the copula term on everything else in the model, so it measures the independent variation the correction has left to work with. Near zero means weakly identified, and you will see it approach zero long before the design matrix is literally singular.
+
+How non-normal is non-normal enough? Becker, Proksch and Ringle ([2022](https://doi.org/10.1007/s11747-021-00805-y)) ran the simulations and give boundary conditions: at $n = 300$ and 80% power you want $|\text{skewness}| \geq 1.932$, or an Anderson–Darling statistic above roughly 19. A significant Shapiro–Wilk test is *not* sufficient. With enough observations, that test rejects normality for departures far too small to identify anything.
+
+One subtlety that trips people up: the non-normality has to survive conditioning on your exogenous regressors. If $P$ looks skewed only because it inherits skewness from a covariate already in the model, the copula term has nothing left to contribute once $W$ is partialled out. `validity()` checks the regressor itself; the residual version is what actually matters, and the $\omega$ diagnostic is the honest summary.
+
+### [2] The copula term must be uncorrelated with the exogenous regressors
+
+Park and Gupta's derivation assumes the copula terms are uncorrelated with the exogenous regressors $W$. When that fails, the PG estimator is inconsistent.
+
+This is not exotic. If $W$ and $P$ are correlated, which is the ordinary case, then $P^*$ and $W$ generally will be too. `validity()` reports both the individual correlations with a Holm correction and a joint $F$ test, and tells you which way to go:
+
+- Assumption satisfied → PG is consistent, and more efficient than the alternatives.
+- Assumption violated → use 2sCOPE (Yang, Qian and Xie [2025](https://doi.org/10.1177/00222437241296453)), which is built for exactly this case. In `endogCopula`, `method = "2scope"`.
+
+### [3] The structural error should be normal
+
+The derivation needs $\xi$ normal to get $E[\xi \mid P] = \rho\sigma_\xi P^*$. Drop normality and the conditional mean is no longer proportional to $P^*$, so the added regressor is the wrong control function.
+
+Becker et al. find that with a non-normal error, the approach is no longer consistent in models with an intercept. Yang et al. and Qian, Koschmann and Xie do permit a non-normal error, but only under a decomposition $\xi = U + V$ where $U$ is normal and carries *all* the dependence with the regressors, and $V$ is independent and can be anything.
+
+Here is the honest difficulty, and `endogCopula` says so in its own output rather than papering over it: your residuals estimate $\xi$, not $U$. So residual skewness neither establishes nor rules out a violation. Whether the decomposition holds is an argument you have to make from the suspected *source* of the endogeneity, not from a diagnostic plot. That is uncomfortable, and it is correct.
+
+### [4] Continuous regressor, independent draws, and the price of the correction
+
+Three smaller conditions and one tradeoff.
+
+$P$ must be **continuous**. The transform $\Phi^{-1}(H(P))$ is built on the probability integral transform, which needs a continuous CDF. With a discrete or coarsely rounded regressor, $H$ steps rather than climbs, ties pile up, and the copula term degrades. Discrete extensions exist and are not well behaved.
+
+Observations must be **independent**, and $n$ must be **reasonably large**. The correction is estimated, not known, so it inherits sampling error, and the bootstrap that `endogCopula` uses for standard errors needs room to work. Panel data needs the panel formulation, not this one.
+
+Finally, the correction is not free. Adding a near-collinear regressor inflates standard errors. Qian, Koschmann and Xie call this **ICON**, the ratio of the corrected standard error to the uncorrected one, and suggest 6 as a rough ceiling. Above that you are buying unbiasedness at a price in precision that may not be worth paying.
+
+The Monte Carlo below shows both halves of that trade at once. Naive OLS is tight and wrong; the correction is centred and wider. Push $\sigma$ down toward normality and watch the corrected histogram spread out until it is useless.
+
+::: {.wdg}
+<h4>Widget 4 — sampling distributions over 400 replications</h4>
+<p class="sub">One draw can flatter any estimator. This is what actually matters: where the estimates land in repeated samples.</p>
+
+```{ojs}
+//| echo: false
+viewof w4n = Inputs.range([100, 1000], {value: 300, step: 100, label: "n per replication"})
+```
+
+```{ojs}
+//| echo: false
+viewof w4sigma = Inputs.range([0.1, 1.2], {value: 0.8, step: 0.05, label: "σ (log-scale of P)"})
+```
+
+```{ojs}
+//| echo: false
+viewof w4go = Inputs.button("Re-run with a fresh seed", {value: 0, reduce: (v) => v + 1})
+```
+
+```{ojs}
+//| echo: false
+w4mc = {
+  const reps = 400;
+  const out = [];
+  for (let r = 0; r < reps; r++) {
+    const d = S.simulate({n: w4n, rho: 0.6, sigma: w4sigma, seed: 1000 + r + w4go * 7919});
+    const f = S.fitBoth(d);
+    if (!f.naive || !f.pg) continue;
+    out.push({b1: f.naive.beta[1], estimator: "naive OLS"});
+    out.push({b1: f.pg.beta[1], estimator: "copula-corrected"});
+  }
+  return out;
+}
+```
+
+```{ojs}
+//| echo: false
+{
+  const naive = w4mc.filter((d) => d.estimator === "naive OLS").map((d) => d.b1);
+  const pg = w4mc.filter((d) => d.estimator !== "naive OLS").map((d) => d.b1);
+  const lo = Math.min(1.0, ...pg, ...naive);
+  const hi = Math.max(3.0, ...naive);
+
+  return Plot.plot({
+    width: Math.min(width, 700), height: 340, marginLeft: 46, marginBottom: 40,
+    x: {label: "β̂₁ across replications", domain: [Math.max(lo, -2), Math.min(hi, 6)]},
+    y: {label: "count"},
+    color: {domain: ["naive OLS", "copula-corrected"], range: [COL.naive, COL.pg], legend: true},
+    marks: [
+      Plot.rectY(w4mc, Plot.binX({y: "count"},
+        {x: "b1", fill: "estimator", fillOpacity: 0.6, thresholds: 60})),
+      Plot.ruleX([2], {stroke: COL.truth, strokeWidth: 2, strokeDasharray: "6 4"}),
+      Plot.ruleY([0])
+    ]
+  });
+}
+```
+
+```{ojs}
+//| echo: false
+html`<div class="readout">
+  <div class="bad">naive OLS mean<b>${S.mean(w4mc.filter((d) => d.estimator === "naive OLS").map((d) => d.b1)).toFixed(3)}</b></div>
+  <div class="good">corrected mean<b>${S.mean(w4mc.filter((d) => d.estimator !== "naive OLS").map((d) => d.b1)).toFixed(3)}</b></div>
+  <div>corrected SD<b>${S.sd(w4mc.filter((d) => d.estimator !== "naive OLS").map((d) => d.b1)).toFixed(3)}</b></div>
+  <div>SD ratio (≈ICON)<b>${(S.sd(w4mc.filter((d) => d.estimator !== "naive OLS").map((d) => d.b1)) / S.sd(w4mc.filter((d) => d.estimator === "naive OLS").map((d) => d.b1))).toFixed(2)}</b></div>
+</div>`
+```
+:::
+
+## Doing it in R
+
+Simulate the same design: a lognormal endogenous regressor, an exogenous covariate, and a structural error correlated with the regressor at $\rho = 0.6$.
+
+```{r}
+#| label: simulate
+#| message: false
+#| warning: false
+library(endogCopula)
+
+set.seed(20260731)
+n   <- 500
+rho <- 0.6
+
+z1 <- rnorm(n)
+z2 <- rho * z1 + sqrt(1 - rho^2) * rnorm(n)   # Gaussian copula, by construction
+
+p  <- as.numeric(scale(exp(z1)))               # lognormal: strongly skewed
+w  <- rnorm(n)                                 # exogenous
+xi <- z2                                       # structural error
+y  <- 1 + 2 * p + 0.5 * w + xi                 # true beta_1 is 2
+
+dat <- data.frame(y, p, w)
+```
+
+Naive OLS first, so we know what we are correcting:
+
+```{r}
+#| label: naive
+coef(summary(lm(y ~ p + w)))
+```
+
+Badly biased, and confident about it. The point estimate is off by about 24%, with a standard error small enough that the true value of 2 is many standard errors away. This is the characteristic damage of endogeneity: not noise, but precision pointed in the wrong direction.
+
+Now the copula correction. The formula is two-part: endogenous regressors before the `|`, exogenous after.
+
+```{r}
+#| label: copreg
+fit <- copreg(y ~ p | w, data = dat, method = "pg", nboots = 199)
+summary(fit)
+```
+
+Read that output against the derivation:
+
+- `p` is back near 2, where it belongs.
+- `p_cop` is $\hat\gamma$, the coefficient on the copula term. It is significant, which is your endogeneity test.
+- `rho(p*, xi*)` recovers $\rho$ directly, close to the 0.6 we simulated. Multiply it by the structural residual standard error and you get `p_cop` back, since $\gamma = \rho\sigma_\xi$.
+- The standard error on `p` is about twice the OLS one. That is the price, and it is a reasonable one here.
+
+Then check the assumptions rather than assuming them:
+
+```{r}
+#| label: validity
+validity(fit)
+```
+
+The blocks map onto the sections above, though which ones appear depends on the estimator's own identification condition. The non-normality block carries Becker et al.'s thresholds. The next tests whether the copula terms are uncorrelated with `w`, and tells you to switch estimators if they are not. The error-term block reports diagnostics with the caveat about $\xi$ versus $U$. The last is ICON.
+
+The negative control is worth running once so you recognise the failure when you meet it. Make the regressor nearly normal and everything falls apart:
+
+```{r}
+#| label: normal-fails
+#| warning: false
+set.seed(20260731)
+p_norm <- as.numeric(scale(exp(0.02 * z1)))    # sigma = 0.02: essentially normal
+dat2   <- data.frame(y = 1 + 2 * p_norm + 0.5 * w + xi, p = p_norm, w = w)
+
+fit2 <- copreg(y ~ p | w, data = dat2, method = "pg", nboots = 199)
+summary(fit2)$coefficients
+```
+
+The point estimate wanders off and the standard error on `p` inflates by roughly a factor of ten against the skewed case, exactly as widget 3 predicted. The copula term is no longer distinguishable from zero, because it is no longer distinguishable from `p`.
+
+Nothing errored. Nothing warned you at the console. The model fit, returned numbers, and one of them even cleared the 5% threshold. It just did not identify anything. `validity()` is what tells you so:
+
+```{r}
+#| label: normal-fails-validity
+validity(fit2)
+```
+
+## When not to use it
+
+Reach for something else when the endogenous regressor is close to normal, discrete, or coarsely measured; when your sample is small; when the copula terms correlate with your exogenous regressors (use 2sCOPE); when you have reason to think the structural error is non-normal in a way that carries the dependence; or when you have a genuinely good instrument, in which case use it.
+
+And treat the Gaussian copula itself as an assumption. It is one specific dependence structure among many. It has no tail dependence, and it is symmetric. If you believe the endogeneity is concentrated in the upper tail, say firms cut prices hardest exactly when they see a demand shock, a Gaussian copula is the wrong shape and no diagnostic in this post will catch it.
+
+`endogCopula` implements seven other estimators through the same `copreg()` interface for when PG's conditions do not hold: `2scope` and `np` for the correlated-exogenous case, `bmw` for a first-stage-residual identification condition, plus `ima` and `jams`. The `validity()` decision tree points at the right one.
+
+## References
+
+Becker, J.-M., D. Proksch, and C. M. Ringle (2022). Revisiting Gaussian copulas to handle endogenous regressors. *Journal of the Academy of Marketing Science* 50, 46–66. <https://doi.org/10.1007/s11747-021-00805-y>
+
+Breitung, J., A. Mayer, and D. Wied (2024). Asymptotic properties of endogeneity corrections using nonlinear transformations. *The Econometrics Journal* 27(3), 362–383. <https://doi.org/10.1093/ectj/utae002>
+
+Haschka, R. E. (2025). Endogeneity corrections using between-regressor correlations. *IMA Journal of Management Mathematics*. <https://doi.org/10.1093/imaman/dpae018>
+
+Hu, X., Y. Qian, and H. Xie (2025). Correcting endogeneity via nonparametric copula control functions. *NBER Working Paper 33607*. <https://doi.org/10.3386/w33607>
+
+Park, S. and S. Gupta (2012). Handling endogenous regressors by joint estimation using copulas. *Marketing Science* 31(4), 567–586. <https://doi.org/10.1287/mksc.1120.0718>
+
+Qian, Y., A. Koschmann, and H. Xie (2025). A practical guide to endogeneity correction using copulas. *Journal of Marketing*.
+
+Yang, F., Y. Qian, and H. Xie (2025). Addressing endogeneity using a two-stage copula generated regressor approach. *Journal of Marketing Research* 62(4), 601–623. <https://doi.org/10.1177/00222437241296453>
+
+::: {.callout-tip collapse="true"}
+## A note on the widgets
+
+They run entirely in your browser using Quarto's built-in Observable JS, with the numerics in a small [`stats.js`](stats.js) module beside this post. No R is involved once the page loads.
+
+One deliberate difference from the R code: the widgets estimate $H$ with the rescaled empirical CDF, $\text{rank}/(n+1)$, which is the `cdf = "rank.n1"` option in `endogCopula`. The R code uses the package default, a kernel-smoothed CDF with Silverman's bandwidth, which is what Park and Gupta use in the original article. The distinction does not matter for anything argued here, but it will produce small numerical differences if you compare the two directly.
+:::
